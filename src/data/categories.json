@@ -1,0 +1,102 @@
+[
+  {
+    "name": "daily-shopping",
+    "label": "Zakupy codzienne",
+    "order": 10
+  },
+  {
+    "name": "food-orders",
+    "label": "Jedzenie zamawiane",
+    "order": 20
+  },
+  {
+    "name": "restaurants",
+    "label": "Jedzenie na mieście",
+    "order": 30
+  },
+  {
+    "name": "extra-shopping",
+    "label": "Zakupy dodatkowe",
+    "order": 40
+  },
+  {
+    "name": "inevitable-extra-expenses",
+    "label": "Wydatki nieprzewidziane",
+    "order": 50
+  },
+  {
+    "name": "entertainment",
+    "label": "Rozrywka",
+    "order": 60
+  },
+  {
+    "name": "commute",
+    "label": "Komunikacja i przejazdy",
+    "order": 70
+  },
+  {
+    "name": "fuel",
+    "label": "Paliwo",
+    "order": 80
+  },
+  {
+    "name": "fuel",
+    "label": "Myjnia i serwis",
+    "order": 90
+  },
+  {
+    "name": "taxi",
+    "label": "Taxi",
+    "order": 100
+  },
+  {
+    "name": "kids",
+    "label": "Dzieci",
+    "order": 110
+  },
+  {
+    "name": "school-cantin",
+    "label": "Szkolne obiady",
+    "order": 120
+  },
+  {
+    "name": "pocket-money",
+    "label": "Kieszonkowe dzieci",
+    "order": 130
+  },
+  {
+    "name": "hairdresser",
+    "label": "Fryzjer",
+    "order": 140
+  },
+  {
+    "name": "medical",
+    "label": "Apteka i lekarze",
+    "order": 150
+  },
+  {
+    "name": "clothing",
+    "label": "Odzież i obuwie",
+    "order": 160
+  },
+  {
+    "name": "gifts",
+    "label": "Prezenty",
+    "order": 170
+  },
+  {
+    "name": "holidays",
+    "label": "Wakacje",
+    "order": 180
+  },
+  {
+    "name": "inevitable-regular-purchases",
+    "label": "Zakupy konieczne okresowe",
+    "order": 190
+  },
+  {
+    "name": "sports",
+    "label": "Sport i aktywność",
+    "order": 200
+  }
+]
