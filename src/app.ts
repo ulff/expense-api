@@ -7,7 +7,7 @@ import { setupRoutes } from "./routes";
 dotevnv.config();
 
 if (!process.env.PORT) {
-  console.error(`No port value specified!`);
+  console.error("Missing PORT env.");
 }
 
 const PORT = parseInt(process.env.PORT as string, 10);
@@ -22,5 +22,5 @@ app.use(helmet());
 setupRoutes(app);
 
 app.listen(PORT, () => {
-  console.info(`Server is listening on port ${PORT}`);
+  console.info(`Listening on port ${PORT}`);
 });
