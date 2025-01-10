@@ -6,12 +6,11 @@ Simple RestAPI for collecting information about daily expenses.
 
 ## Running locally
 
-Clone the GitHub repo, create `.env` file as follows: 
+Clone the GitHub repo, create `.env` file as follows:
 
 ```dotenv
 PORT=4000
 ```
-
 
 and run the commands:
 
