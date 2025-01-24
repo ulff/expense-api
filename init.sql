@@ -1,0 +1,9 @@
+CREATE TABLE expenses(
+  id UUID PRIMARY KEY,
+  zloty INTEGER NOT NULL,
+  groszy INTEGER NOT NULL,
+  category VARCHAR(64) DEFAULT NULL,
+  label VARCHAR(64) DEFAULT NULL,
+  spent_on DATE NOT NULL,
+  saved_on DATE NOT NULL
+);

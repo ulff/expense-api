@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  db:
+    container_name: expense_api_db
+    image: bitnami/postgresql:14
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=expenseapi
+      - POSTGRES_PASSWORD=987d6b
+      - POSTGRES_DB=expenseapidb
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/expenseapi.sql
+      - /var/lib/postgresql/data
+      - /var/lib/postgresql/tmp
