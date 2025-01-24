@@ -1,6 +1,7 @@
 import { connection } from "./connection";
 import { Client, PoolClient } from "pg";
 import DuplicateKeyError from "./error/DuplicateKeyError";
+import FoundMultipleRowsError from "./error/FoundMultipleRowsError";
 
 let db: (Client & PoolClient) | null = null;
 
@@ -33,6 +34,10 @@ export const fetchOne: (sql: string, params: any[]) => Promise<any> = async (
       db = await connection.connect();
     }
     const queryReturn = await db.query(sql, params);
+
+    if (queryReturn.rows.length > 1) {
+      throw new FoundMultipleRowsError(queryReturn.rows.length);
+    }
 
     return queryReturn.rows[0] || [];
   } catch (e) {

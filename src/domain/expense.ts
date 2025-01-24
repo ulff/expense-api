@@ -1,15 +1,19 @@
 import { Expense } from "../types/expense";
-import { addExpense } from "../db/repository/expense";
+import { addExpense, updateExpense } from "../db/repository/expense";
+import { getPeriodForDate } from "../db/repository/period";
+import MissingPeriodForDateError from "../db/error/MissingPeriodForDateError";
 
 type expenseInputType = {
+  expenseId?: string;
   zloty: number;
   groszy: number;
-  label: string;
+  label?: string;
   category: string;
   spentOn: Date;
 };
 
-export const validateExpense: (input: expenseInputType) => string[] = ({
+const validateExpense: (input: expenseInputType) => string[] = ({
+  expenseId,
   zloty,
   groszy,
   category,
@@ -17,30 +21,58 @@ export const validateExpense: (input: expenseInputType) => string[] = ({
 }) => {
   const validationErrors = [];
 
+  if (expenseId) {
+    // todo: if periodId then check if exists
+  }
+
   if (!zloty || !groszy) {
-    validationErrors.push("Amount is empty or invalid.");
+    validationErrors.push("Amount is empty.");
   }
   if (!category) {
-    validationErrors.push("Category is empty or invalid.");
+    validationErrors.push("Category is empty.");
   }
   if (!spentOn) {
-    validationErrors.push("Spent date is empty or invalid.");
+    validationErrors.push("Spent date is empty.");
   }
+
+  // todo: check amount formats
+  // todo: check category existence
+  // todo: check spent date format
 
   return validationErrors;
 };
 
-export const saveExpense: (
+const saveExpense: (
   input: expenseInputType,
-) => Promise<Expense> = async ({ zloty, groszy, category, label, spentOn }) => {
-  const savedOn = new Date();
+) => Promise<Expense> = async ({ expenseId, zloty, groszy, category, label, spentOn }) => {
+  const period = await getPeriodForDate(spentOn);
+  if (!period) {
+    throw new MissingPeriodForDateError(spentOn);
+  }
 
-  return addExpense({
-    zloty,
-    groszy,
-    category,
-    label: label || null,
-    spentOn: spentOn || savedOn,
-    savedOn,
-  });
+  if (expenseId) {
+    return updateExpense({
+      expenseId,
+      period,
+      zloty,
+      groszy,
+      category,
+      label: label || null,
+      spentOn,
+    })
+  } else {
+    return addExpense({
+      period,
+      zloty,
+      groszy,
+      category,
+      label: label || null,
+      spentOn,
+    });
+  }
+};
+
+export {
+  validateExpense,
+  saveExpense,
 };
