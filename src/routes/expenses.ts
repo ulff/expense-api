@@ -1,6 +1,7 @@
 import express from "express";
 import { listExpenses } from "../db/repository/expense";
 import { saveExpense, validateExpense } from "../domain/model/expense";
+import MissingPeriodForDateError from "../domain/error/MissingPeriodForDateError";
 
 const router = express.Router();
 
@@ -38,6 +39,10 @@ router.post("/", async (request, response) => {
     });
     response.status(201).json(expense);
   } catch (e) {
+    if (e instanceof MissingPeriodForDateError) {
+      response.status(400).json({ errors: e.message });
+      return;
+    }
     response.status(500).end();
   }
 });

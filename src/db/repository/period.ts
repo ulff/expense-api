@@ -82,7 +82,7 @@ const updatePeriod: (o: updatePeriodInputType) => Promise<Period> = async ({
 }) => {
   const sql: string =
     "UPDATE periods " +
-    "SET date_start = $2, date_end = $2, name = $4 " +
+    "SET date_start = $2, date_end = $3, name = $4 " +
     "WHERE (id = $1);";
   const params: any[] = [periodId, dateStart, dateEnd, name];
 

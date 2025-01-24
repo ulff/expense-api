@@ -78,7 +78,7 @@ const updateExpense: (o: updateExpenseInputType) => Promise<Expense> = async ({
 
   const sql: string =
     "UPDATE expenses " +
-    "SET period = $1, zloty = $3, groszy = $4, category = $5, label = $6, spent_on = $7, saved_on = $8 " +
+    "SET period = $2, zloty = $3, groszy = $4, category = $5, label = $6, spent_on = $7, saved_on = $8 " +
     "WHERE (id = $1);";
   const params: any[] = [
     expenseId,
