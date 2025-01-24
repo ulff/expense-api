@@ -1,5 +1,10 @@
 import { Expense } from "../types/expense";
-import { addExpense, updateExpense } from "../../db/repository/expense";
+import { Period } from "../types/period";
+import {
+  addExpense,
+  updateExpense,
+  listExpenses,
+} from "../../db/repository/expense";
 import { getPeriodForDate } from "../../db/repository/period";
 import MissingPeriodForDateError from "../error/MissingPeriodForDateError";
 
@@ -76,5 +81,16 @@ const saveExpense: (input: expenseInputType) => Promise<Expense> = async ({
     });
   }
 };
+const listAllExpenses: () => Promise<Expense[]> = async () => {
+  const expenses = listExpenses();
+  return expenses;
+};
 
-export { validateExpense, saveExpense };
+const listExpensesForPeriod: (period: Period) => Promise<Expense[]> = async (
+  period,
+) => {
+  const expenses = listExpenses(period);
+  return expenses;
+};
+
+export { validateExpense, saveExpense, listAllExpenses, listExpensesForPeriod };

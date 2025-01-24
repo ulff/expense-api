@@ -2,7 +2,7 @@ import { v4 } from "uuid";
 import { execute, fetchMany, fetchOne } from "..";
 import type { Period } from "../../domain/types/period";
 
-export const listPeriods: () => Promise<Period[]> = async () => {
+const listPeriods: () => Promise<Period[]> = async () => {
   const sql: string = "SELECT * FROM periods ORDER BY date_start;";
   const params: any[] = [];
 
@@ -12,18 +12,6 @@ export const listPeriods: () => Promise<Period[]> = async () => {
 const getPeriod: (id: string) => Promise<Period | null> = async (id) => {
   const sql: string = "SELECT * FROM periods WHERE id = $1;";
   const params: any[] = [id];
-
-  const result = await fetchOne(sql, params);
-  if (result.length === 0) {
-    return null;
-  }
-  return result as Period;
-};
-
-const getCurrentPeriod: () => Promise<Period | null> = async () => {
-  const sql: string =
-    "SELECT * FROM periods WHERE date_start < now() AND date_end > now();";
-  const params: any[] = [];
 
   const result = await fetchOne(sql, params);
   if (result.length === 0) {
@@ -91,4 +79,4 @@ const updatePeriod: (o: updatePeriodInputType) => Promise<Period> = async ({
   return getPeriod(periodId);
 };
 
-export { getCurrentPeriod, getPeriodForDate, addPeriod, updatePeriod };
+export { listPeriods, getPeriodForDate, addPeriod, updatePeriod };

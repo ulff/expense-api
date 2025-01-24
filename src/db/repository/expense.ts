@@ -1,11 +1,20 @@
 import { v4 } from "uuid";
 import { execute, fetchMany, fetchOne } from "..";
 import type { Expense } from "../../domain/types/expense";
-import { Period } from "../../domain/types/period";
+import type { Period } from "../../domain/types/period";
 
-export const listExpenses: () => Promise<Expense[]> = async () => {
-  const sql: string = "SELECT * FROM expenses;";
+const listExpenses: (period?: Period) => Promise<Expense[]> = async (
+  period,
+) => {
+  let sql: string = "SELECT * FROM expenses ";
   const params: any[] = [];
+
+  if (period) {
+    sql += "WHERE period = $1 ";
+    params.push(period.id);
+  }
+
+  sql += "ORDER by spent_on DESC;";
 
   return (await fetchMany(sql, params)) as Expense[];
 };
@@ -96,4 +105,4 @@ const updateExpense: (o: updateExpenseInputType) => Promise<Expense> = async ({
   return getExpense(expenseId);
 };
 
-export { addExpense, updateExpense };
+export { listExpenses, addExpense, updateExpense };
