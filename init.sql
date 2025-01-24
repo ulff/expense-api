@@ -2,7 +2,7 @@ CREATE TABLE periods(
   id UUID PRIMARY KEY,
   date_start DATE NOT NULL,
   date_end DATE NOT NULL,
-  name VARCHAR(64) NOT NULL,
+  name VARCHAR(64) NOT NULL
 );
 
 CREATE TABLE expenses(
