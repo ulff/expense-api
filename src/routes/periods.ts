@@ -1,6 +1,6 @@
 import express from "express";
 import { listPeriods, getCurrentPeriod } from "../db/repository/period";
-import { savePeriod, validatePeriod } from "../domain/period";
+import { savePeriod, validatePeriod } from "../domain/model/period";
 
 const router = express.Router();
 

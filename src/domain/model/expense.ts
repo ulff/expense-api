@@ -1,7 +1,7 @@
 import { Expense } from "../types/expense";
-import { addExpense, updateExpense } from "../db/repository/expense";
-import { getPeriodForDate } from "../db/repository/period";
-import MissingPeriodForDateError from "../db/error/MissingPeriodForDateError";
+import { addExpense, updateExpense } from "../../db/repository/expense";
+import { getPeriodForDate } from "../../db/repository/period";
+import MissingPeriodForDateError from "../error/MissingPeriodForDateError";
 
 type expenseInputType = {
   expenseId?: string;

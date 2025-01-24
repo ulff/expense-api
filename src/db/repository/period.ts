@@ -1,6 +1,6 @@
 import { v4 } from "uuid";
 import { execute, fetchMany, fetchOne } from "..";
-import type { Period } from "../../types/period";
+import type { Period } from "../../domain/types/period";
 
 export const listPeriods: () => Promise<Period[]> = async () => {
   const sql: string = "SELECT * FROM periods ORDER BY date_start;";

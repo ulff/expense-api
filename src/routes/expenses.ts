@@ -1,6 +1,6 @@
 import express from "express";
 import { listExpenses } from "../db/repository/expense";
-import { saveExpense, validateExpense } from "../domain/expense";
+import { saveExpense, validateExpense } from "../domain/model/expense";
 
 const router = express.Router();
 

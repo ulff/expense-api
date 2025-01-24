@@ -1,7 +1,7 @@
 import { v4 } from "uuid";
 import { execute, fetchMany, fetchOne } from "..";
-import type { Expense } from "../../types/expense";
-import { Period } from "../../types/period";
+import type { Expense } from "../../domain/types/expense";
+import { Period } from "../../domain/types/period";
 
 export const listExpenses: () => Promise<Expense[]> = async () => {
   const sql: string = "SELECT * FROM expenses;";

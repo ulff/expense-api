@@ -1,5 +1,5 @@
 import { Period } from "../types/period";
-import { addPeriod, updatePeriod } from "../db/repository/period";
+import { addPeriod, updatePeriod } from "../../db/repository/period";
 
 type periodInputType = {
   periodId?: string;
