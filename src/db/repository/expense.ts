@@ -45,7 +45,16 @@ const addExpense: (o: addExpenseInputType) => Promise<Expense> = async ({
     "INSERT INTO " +
     "expenses(id, period, zloty, groszy, category, label, spent_on, saved_on) " +
     "VALUES ($1, $2, $3, $4, $5, $6, $7, $8);";
-  const params: any[] = [id, period.id, zloty, groszy, category, label, spentOn, savedOn];
+  const params: any[] = [
+    id,
+    period.id,
+    zloty,
+    groszy,
+    category,
+    label,
+    spentOn,
+    savedOn,
+  ];
 
   await execute(sql, params);
 
@@ -71,14 +80,20 @@ const updateExpense: (o: updateExpenseInputType) => Promise<Expense> = async ({
     "UPDATE expenses " +
     "SET period = $1, zloty = $3, groszy = $4, category = $5, label = $6, spent_on = $7, saved_on = $8 " +
     "WHERE (id = $1);";
-  const params: any[] = [expenseId, period.id, zloty, groszy, category, label, spentOn, savedOn];
+  const params: any[] = [
+    expenseId,
+    period.id,
+    zloty,
+    groszy,
+    category,
+    label,
+    spentOn,
+    savedOn,
+  ];
 
   await execute(sql, params);
 
   return getExpense(expenseId);
 };
 
-export {
-  addExpense,
-  updateExpense,
-};
+export { addExpense, updateExpense };

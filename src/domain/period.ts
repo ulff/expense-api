@@ -12,7 +12,7 @@ const validatePeriod: (input: periodInputType) => string[] = ({
   periodId,
   dateStart,
   dateEnd,
-  name
+  name,
 }) => {
   const validationErrors = [];
 
@@ -24,7 +24,9 @@ const validatePeriod: (input: periodInputType) => string[] = ({
     validationErrors.push("Name is empty.");
   }
   if (!dateStart || !dateEnd) {
-    validationErrors.push("Both dates are obligatory. At least one of them is empty.");
+    validationErrors.push(
+      "Both dates are obligatory. At least one of them is empty.",
+    );
   }
   if (dateStart >= dateEnd) {
     validationErrors.push("Start have to be before end date.");
@@ -37,20 +39,18 @@ const validatePeriod: (input: periodInputType) => string[] = ({
   return validationErrors;
 };
 
-const savePeriod: (
-  input: periodInputType,
-) => Promise<Period> = async ({
+const savePeriod: (input: periodInputType) => Promise<Period> = async ({
   periodId,
   dateStart,
   dateEnd,
-  name
+  name,
 }) => {
   if (periodId) {
     return updatePeriod({
       periodId,
       dateStart,
       dateEnd,
-      name
+      name,
     });
   } else {
     return addPeriod({
@@ -61,7 +61,4 @@ const savePeriod: (
   }
 };
 
-export {
-  validatePeriod,
-  savePeriod,
-}
+export { validatePeriod, savePeriod };

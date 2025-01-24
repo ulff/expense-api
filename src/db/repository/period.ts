@@ -21,7 +21,8 @@ const getPeriod: (id: string) => Promise<Period | null> = async (id) => {
 };
 
 const getCurrentPeriod: () => Promise<Period | null> = async () => {
-  const sql: string = "SELECT * FROM periods WHERE date_start < now() AND date_end > now();";
+  const sql: string =
+    "SELECT * FROM periods WHERE date_start < now() AND date_end > now();";
   const params: any[] = [];
 
   const result = await fetchOne(sql, params);
@@ -31,8 +32,11 @@ const getCurrentPeriod: () => Promise<Period | null> = async () => {
   return result as Period;
 };
 
-const getPeriodForDate: (date: Date) => Promise<Period | null> = async (date) => {
-  const sql: string = "SELECT * FROM periods WHERE date_start < $1 AND date_end > $1;";
+const getPeriodForDate: (date: Date) => Promise<Period | null> = async (
+  date,
+) => {
+  const sql: string =
+    "SELECT * FROM periods WHERE date_start < $1 AND date_end > $1;";
   const params: any[] = [date];
 
   const result = await fetchOne(sql, params);
@@ -51,7 +55,7 @@ type addPeriodInputType = {
 const addPeriod: (o: addPeriodInputType) => Promise<Period> = async ({
   dateStart,
   dateEnd,
-  name
+  name,
 }) => {
   const id = v4();
 
@@ -74,7 +78,7 @@ const updatePeriod: (o: updatePeriodInputType) => Promise<Period> = async ({
   periodId,
   dateStart,
   dateEnd,
-  name
+  name,
 }) => {
   const sql: string =
     "UPDATE periods " +
@@ -87,9 +91,4 @@ const updatePeriod: (o: updatePeriodInputType) => Promise<Period> = async ({
   return getPeriod(periodId);
 };
 
-export {
-  getCurrentPeriod,
-  getPeriodForDate,
-  addPeriod,
-  updatePeriod,
-}
+export { getCurrentPeriod, getPeriodForDate, addPeriod, updatePeriod };

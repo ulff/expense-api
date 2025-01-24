@@ -13,7 +13,7 @@ router.get("/current", async (request, response) => {
   const period = await getCurrentPeriod();
 
   if (!period) {
-    response.status(404).json({})
+    response.status(404).json({});
   }
 
   response.json(period);
@@ -38,7 +38,7 @@ router.post("/", async (request, response) => {
     const period = await savePeriod({
       dateStart,
       dateEnd,
-      name
+      name,
     });
     response.status(201).json(period);
   } catch (e) {
@@ -47,7 +47,7 @@ router.post("/", async (request, response) => {
 });
 
 router.put("/:periodId", async (request, response) => {
-  const periodId = request.params.periodId
+  const periodId = request.params.periodId;
 
   const dateStart = request.body.dateStart as Date;
   const dateEnd = request.body.dateEnd as Date;
@@ -70,7 +70,7 @@ router.put("/:periodId", async (request, response) => {
       periodId,
       dateStart,
       dateEnd,
-      name
+      name,
     });
     response.status(201).json(period);
   } catch (e) {

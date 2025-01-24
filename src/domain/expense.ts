@@ -42,9 +42,14 @@ const validateExpense: (input: expenseInputType) => string[] = ({
   return validationErrors;
 };
 
-const saveExpense: (
-  input: expenseInputType,
-) => Promise<Expense> = async ({ expenseId, zloty, groszy, category, label, spentOn }) => {
+const saveExpense: (input: expenseInputType) => Promise<Expense> = async ({
+  expenseId,
+  zloty,
+  groszy,
+  category,
+  label,
+  spentOn,
+}) => {
   const period = await getPeriodForDate(spentOn);
   if (!period) {
     throw new MissingPeriodForDateError(spentOn);
@@ -59,7 +64,7 @@ const saveExpense: (
       category,
       label: label || null,
       spentOn,
-    })
+    });
   } else {
     return addExpense({
       period,
@@ -72,7 +77,4 @@ const saveExpense: (
   }
 };
 
-export {
-  validateExpense,
-  saveExpense,
-};
+export { validateExpense, saveExpense };
