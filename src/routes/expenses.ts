@@ -1,12 +1,15 @@
 import express from "express";
-import { listExpenses } from "../db/repository/expense";
-import { saveExpense, validateExpense } from "../domain/model/expense";
+import {
+  listAllExpenses,
+  saveExpense,
+  validateExpense,
+} from "../domain/model/expense";
 import MissingPeriodForDateError from "../domain/error/MissingPeriodForDateError";
 
 const router = express.Router();
 
 router.get("/", async (request, response) => {
-  const expenses = await listExpenses();
+  const expenses = await listAllExpenses();
   response.json(expenses);
 });
 

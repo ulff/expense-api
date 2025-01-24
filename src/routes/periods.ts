@@ -1,22 +1,46 @@
 import express from "express";
-import { listPeriods, getCurrentPeriod } from "../db/repository/period";
-import { savePeriod, validatePeriod } from "../domain/model/period";
+import {
+  savePeriod,
+  validatePeriod,
+  listAllPeriods,
+  getCurrentPeriod,
+} from "../domain/model/period";
+import { listExpensesForPeriod } from "../domain/model/expense";
+import MissingPeriodForDateError from "../domain/error/MissingPeriodForDateError";
 
 const router = express.Router();
 
 router.get("/", async (request, response) => {
-  const periods = await listPeriods();
+  const periods = await listAllPeriods();
   response.json(periods);
 });
 
 router.get("/current", async (request, response) => {
-  const period = await getCurrentPeriod();
-
-  if (!period) {
-    response.status(404).json({});
+  try {
+    const period = await getCurrentPeriod();
+    response.json(period);
+  } catch (e) {
+    if (e instanceof MissingPeriodForDateError) {
+      response.status(404).json({ errors: e.message });
+      return;
+    }
+    response.status(500).end();
   }
+});
 
-  response.json(period);
+router.get("/current/expenses", async (request, response) => {
+  try {
+    const period = await getCurrentPeriod();
+    const expenses = await listExpensesForPeriod(period);
+
+    response.status(200).json(expenses);
+  } catch (e) {
+    if (e instanceof MissingPeriodForDateError) {
+      response.status(404).json({ errors: e.message });
+      return;
+    }
+    response.status(500).end();
+  }
 });
 
 router.post("/", async (request, response) => {

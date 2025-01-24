@@ -1,5 +1,11 @@
 import { Period } from "../types/period";
-import { addPeriod, updatePeriod } from "../../db/repository/period";
+import {
+  addPeriod,
+  getPeriodForDate,
+  listPeriods,
+  updatePeriod,
+} from "../../db/repository/period";
+import MissingPeriodForDateError from "../error/MissingPeriodForDateError";
 
 type periodInputType = {
   periodId?: string;
@@ -61,4 +67,19 @@ const savePeriod: (input: periodInputType) => Promise<Period> = async ({
   }
 };
 
-export { validatePeriod, savePeriod };
+const listAllPeriods: () => Promise<Period[]> = async () => {
+  const periods = listPeriods();
+  return periods;
+};
+
+const getCurrentPeriod: () => Promise<Period> = async () => {
+  const now = new Date();
+  const period = await getPeriodForDate(now);
+  if (!period) {
+    throw new MissingPeriodForDateError(now);
+  }
+
+  return period;
+};
+
+export { validatePeriod, savePeriod, listAllPeriods, getCurrentPeriod };
