@@ -4,6 +4,7 @@ import {
   validatePeriod,
   listAllPeriods,
   getCurrentPeriod,
+  getPeriod,
 } from "../domain/model/period";
 import { listExpensesForPeriod } from "../domain/model/expense";
 import MissingPeriodForDateError from "../domain/error/MissingPeriodForDateError";
@@ -39,6 +40,30 @@ router.get("/current/expenses", async (request, response) => {
       response.status(404).json({ errors: e.message });
       return;
     }
+    response.status(500).end();
+  }
+});
+
+router.get("/:periodId", async (request, response) => {
+  const periodId = request.params.periodId;
+
+  try {
+    const period = await getPeriod(periodId);
+    response.json(period);
+  } catch (e) {
+    response.status(500).end();
+  }
+});
+
+router.get("/:periodId/expenses", async (request, response) => {
+  const periodId = request.params.periodId;
+
+  try {
+    const period = await getPeriod(periodId);
+    const expenses = await listExpensesForPeriod(period);
+
+    response.status(200).json(expenses);
+  } catch (e) {
     response.status(500).end();
   }
 });

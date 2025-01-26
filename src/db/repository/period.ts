@@ -9,7 +9,7 @@ const listPeriods: () => Promise<Period[]> = async () => {
   return (await fetchMany(sql, params)) as Period[];
 };
 
-const getPeriod: (id: string) => Promise<Period | null> = async (id) => {
+const getPeriodById: (id: string) => Promise<Period | null> = async (id) => {
   const sql: string = "SELECT * FROM periods WHERE id = $1;";
   const params: any[] = [id];
 
@@ -55,7 +55,7 @@ const addPeriod: (o: addPeriodInputType) => Promise<Period> = async ({
 
   await execute(sql, params);
 
-  return getPeriod(id);
+  return getPeriodById(id);
 };
 
 type updatePeriodInputType = {
@@ -76,7 +76,13 @@ const updatePeriod: (o: updatePeriodInputType) => Promise<Period> = async ({
 
   await execute(sql, params);
 
-  return getPeriod(periodId);
+  return getPeriodById(periodId);
 };
 
-export { listPeriods, getPeriodForDate, addPeriod, updatePeriod };
+export {
+  listPeriods,
+  getPeriodForDate,
+  addPeriod,
+  updatePeriod,
+  getPeriodById,
+};
