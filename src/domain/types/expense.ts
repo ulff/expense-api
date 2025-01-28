@@ -1,5 +1,5 @@
 import { PLN } from "./PLN";
-import { Category } from "./category";
+import { CategoryName } from "./category";
 import { Period } from "./period";
 
 export type Expense = {
@@ -7,6 +7,6 @@ export type Expense = {
   period: Period;
   amount: PLN;
   spentOn: Date;
-  category: Category;
+  category: CategoryName;
   label: string | null;
 };

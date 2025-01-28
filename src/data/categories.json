@@ -1,102 +1,82 @@
-[
-  {
-    "name": "daily-shopping",
+{
+  "daily-shopping": {
     "label": "Zakupy codzienne",
     "order": 10
   },
-  {
-    "name": "food-orders",
+  "food-orders": {
     "label": "Jedzenie zamawiane",
     "order": 20
   },
-  {
-    "name": "restaurants",
+  "restaurants": {
     "label": "Jedzenie na mieście",
     "order": 30
   },
-  {
-    "name": "extra-shopping",
+  "extra-shopping": {
     "label": "Zakupy dodatkowe",
     "order": 40
   },
-  {
-    "name": "inevitable-extra-expenses",
+  "inevitable-extra-expenses": {
     "label": "Wydatki nieprzewidziane",
     "order": 50
   },
-  {
-    "name": "entertainment",
+  "entertainment": {
     "label": "Rozrywka",
     "order": 60
   },
-  {
-    "name": "commute",
+  "commute": {
     "label": "Komunikacja i przejazdy",
     "order": 70
   },
-  {
-    "name": "fuel",
+  "fuel": {
     "label": "Paliwo",
     "order": 80
   },
-  {
-    "name": "fuel",
+  "fuel": {
     "label": "Myjnia i serwis",
     "order": 90
   },
-  {
-    "name": "taxi",
+  "taxi": {
     "label": "Taxi",
     "order": 100
   },
-  {
-    "name": "kids",
+  "kids": {
     "label": "Dzieci",
     "order": 110
   },
-  {
-    "name": "school-cantin",
+  "school-cantin": {
     "label": "Szkolne obiady",
     "order": 120
   },
-  {
-    "name": "pocket-money",
+  "pocket-money": {
     "label": "Kieszonkowe dzieci",
     "order": 130
   },
-  {
-    "name": "hairdresser",
+  "hairdresser": {
     "label": "Fryzjer",
     "order": 140
   },
-  {
-    "name": "medical",
+  "medical": {
     "label": "Apteka i lekarze",
     "order": 150
   },
-  {
-    "name": "clothing",
+  "clothing": {
     "label": "Odzież i obuwie",
     "order": 160
   },
-  {
-    "name": "gifts",
+  "gifts": {
     "label": "Prezenty",
     "order": 170
   },
-  {
-    "name": "holidays",
+  "holidays": {
     "label": "Wakacje",
     "order": 180
   },
-  {
-    "name": "inevitable-regular-purchases",
+  "inevitable-regular-purchases": {
     "label": "Zakupy konieczne okresowe",
     "order": 190
   },
-  {
-    "name": "sports",
+  "sports": {
     "label": "Sport i aktywność",
     "order": 200
   }
-]
+}
