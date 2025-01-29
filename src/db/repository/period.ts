@@ -6,7 +6,17 @@ const listPeriods: () => Promise<Period[]> = async () => {
   const sql: string = "SELECT * FROM periods ORDER BY date_start;";
   const params: any[] = [];
 
-  return (await fetchMany(sql, params)) as Period[];
+  const results = await fetchMany(sql, params);
+  if (!results || results.length === 0) {
+    return [];
+  }
+
+  return results.map((result) => ({
+    id: result.id,
+    dateStart: new Date(result.date_start),
+    dateEnd: new Date(result.date_end),
+    name: result.name,
+  }));
 };
 
 const getPeriodById: (id: string) => Promise<Period | null> = async (id) => {
@@ -17,7 +27,15 @@ const getPeriodById: (id: string) => Promise<Period | null> = async (id) => {
   if (result.length === 0) {
     return null;
   }
-  return result as Period;
+
+  const period: Period = {
+    id: result.id,
+    dateStart: new Date(result.date_start),
+    dateEnd: new Date(result.date_end),
+    name: result.name,
+  };
+
+  return period;
 };
 
 const getPeriodForDate: (date: Date) => Promise<Period | null> = async (
@@ -31,7 +49,15 @@ const getPeriodForDate: (date: Date) => Promise<Period | null> = async (
   if (result.length === 0) {
     return null;
   }
-  return result as Period;
+
+  const period: Period = {
+    id: result.id,
+    dateStart: new Date(result.date_start),
+    dateEnd: new Date(result.date_end),
+    name: result.name,
+  };
+
+  return period;
 };
 
 type addPeriodInputType = {

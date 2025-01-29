@@ -2,32 +2,80 @@ import { v4 } from "uuid";
 import { execute, fetchMany, fetchOne } from "..";
 import type { Expense } from "../../domain/types/expense";
 import type { Period } from "../../domain/types/period";
+import { CategoryName } from "../../domain/types/category";
 
 const listExpenses: (period?: Period) => Promise<Expense[]> = async (
   period,
 ) => {
-  let sql: string = "SELECT * FROM expenses ";
+  let sql = `
+    SELECT e.*, 
+           p.date_start, p.date_end, p.name AS period_name 
+    FROM expenses e
+    JOIN periods p ON e.period = p.id
+  `;
   const params: any[] = [];
 
   if (period) {
-    sql += "WHERE period = $1 ";
+    sql += "WHERE e.period = $1 ";
     params.push(period.id);
   }
 
-  sql += "ORDER by spent_on DESC;";
+  sql += "ORDER BY e.spent_on DESC;";
 
-  return (await fetchMany(sql, params)) as Expense[];
+  const results = await fetchMany(sql, params);
+  if (!results || results.length === 0) {
+    return [];
+  }
+
+  return results.map((result) => ({
+    id: result.id,
+    period: {
+      id: result.period,
+      dateStart: new Date(result.date_start),
+      dateEnd: new Date(result.date_end),
+      name: result.period_name,
+    },
+    amount: {
+      zloty: result.zloty,
+      groszy: result.groszy,
+    },
+    spentOn: new Date(result.spent_on),
+    category: result.category as CategoryName,
+    label: result.label,
+  }));
 };
 
 const getExpense: (id: string) => Promise<Expense | null> = async (id) => {
-  const sql: string = "SELECT * FROM expenses WHERE id = $1;";
+  const sql = `
+    SELECT e.*, 
+           p.date_start, p.date_end, p.name AS period_name 
+    FROM expenses e
+    JOIN periods p ON e.period = p.id
+    WHERE e.id = $1;
+  `;
   const params: any[] = [id];
 
   const result = await fetchOne(sql, params);
-  if (result.length === 0) {
+  if (!result) {
     return null;
   }
-  return result as Expense;
+
+  return {
+    id: result.id,
+    period: {
+      id: result.period,
+      dateStart: new Date(result.date_start),
+      dateEnd: new Date(result.date_end),
+      name: result.period_name,
+    },
+    amount: {
+      zloty: result.zloty,
+      groszy: result.groszy,
+    },
+    spentOn: new Date(result.spent_on),
+    category: result.category as CategoryName,
+    label: result.label,
+  };
 };
 
 type addExpenseInputType = {
