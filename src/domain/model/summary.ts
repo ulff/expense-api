@@ -1,19 +1,13 @@
 import { Summary, SummaryIndex, SummaryInput } from "../types/summary";
 import { CategoryName } from "../types/category";
-import { sumPLN } from "../types/PLN";
 import { Expense } from "../types/expense";
+import { sumPLN } from "../types/PLN";
 
 const prepareSummary: ({
   period,
   expenses,
   categories,
 }: SummaryInput) => Summary = ({ period, expenses, categories }) => {
-  console.log("period", period);
-  console.log("-------------------------");
-  console.log("expenses", expenses);
-  console.log("-------------------------");
-  console.log("categories", categories);
-
   const summaryIndex: SummaryIndex = {};
 
   const calculated: SummaryIndex = expenses.reduce(
