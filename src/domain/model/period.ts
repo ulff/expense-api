@@ -4,6 +4,7 @@ import {
   getPeriodForDate,
   listPeriods,
   updatePeriod,
+  getPeriodById,
 } from "../../db/repository/period";
 import MissingPeriodForDateError from "../error/MissingPeriodForDateError";
 
@@ -72,6 +73,10 @@ const listAllPeriods: () => Promise<Period[]> = async () => {
   return periods;
 };
 
+const getPeriod: (periodId: string) => Promise<Period> = async (periodId) => {
+  return getPeriodById(periodId);
+};
+
 const getCurrentPeriod: () => Promise<Period> = async () => {
   const now = new Date();
   const period = await getPeriodForDate(now);
@@ -82,4 +87,10 @@ const getCurrentPeriod: () => Promise<Period> = async () => {
   return period;
 };
 
-export { validatePeriod, savePeriod, listAllPeriods, getCurrentPeriod };
+export {
+  validatePeriod,
+  savePeriod,
+  listAllPeriods,
+  getCurrentPeriod,
+  getPeriod,
+};
