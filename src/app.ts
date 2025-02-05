@@ -5,12 +5,16 @@ import helmet from "helmet";
 import { setupRoutes } from "./routes";
 import { config } from "./config";
 
+import { DbRepository } from "./infrastructure/db/DbRepository";
+
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(helmet());
+
+app.set("repository", new DbRepository());
 
 setupRoutes(app);
 

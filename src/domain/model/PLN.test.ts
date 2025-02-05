@@ -1,4 +1,4 @@
-import { sumPLN, PLN } from "./PLN";
+import { PLN } from "./PLN";
 
 describe("sumPLN method tests", () => {
   test("verifies that 1.00 PLN + 2.00 PLN is 3.00 PLN", () => {
@@ -17,7 +17,7 @@ describe("sumPLN method tests", () => {
       groszy: 0,
     };
 
-    expect(sumPLN(a, b)).toStrictEqual(expectedSum);
+    expect(PLN.sumPLN(a, b)).toStrictEqual(expectedSum);
   });
 
   test("verifies that 1.99 PLN + 2.99 PLN is 4.98 PLN", () => {
@@ -36,7 +36,7 @@ describe("sumPLN method tests", () => {
       groszy: 98,
     };
 
-    expect(sumPLN(a, b)).toStrictEqual(expectedSum);
+    expect(PLN.sumPLN(a, b)).toStrictEqual(expectedSum);
   });
 
   test("verifies that 3.75 PLN + 0.00 PLN is 3.75 PLN", () => {
@@ -55,6 +55,6 @@ describe("sumPLN method tests", () => {
       groszy: 75,
     };
 
-    expect(sumPLN(a, b)).toStrictEqual(expectedSum);
+    expect(PLN.sumPLN(a, b)).toStrictEqual(expectedSum);
   });
 });
