@@ -1,130 +1,142 @@
 import express from "express";
-import {
-  savePeriod,
-  validatePeriod,
-  listAllPeriods,
-  getCurrentPeriod,
-  getPeriod,
-} from "../domain/model/period";
-import { listExpensesForPeriod } from "../domain/model/expense";
-import MissingPeriodForDateError from "../domain/error/MissingPeriodForDateError";
 
-const router = express.Router();
+import { Repository } from "../domain/repository/Respository";
+import { MissingPeriodForDateError } from "../domain/validator/error/expense/MissingPeriodForDateError";
+import { MissingPeriodError } from "../domain/validator/error/period/MissingPeriodError";
+import { ValidationError } from "../domain/validator/error/ValidationError";
 
-router.get("/", async (request, response) => {
-  const periods = await listAllPeriods();
-  response.json(periods);
-});
+import { ListAllPeriods } from "../domain/use-case/period/ListAllPeriods";
+import { GetCurrentPeriod } from "../domain/use-case/period/GetCurrentPeriod";
+import { GetPeriodById } from "../domain/use-case/period/GetPeriodById";
+import { AddPeriod } from "../domain/use-case/period/AddPeriod";
+import { ModifyPeriod } from "../domain/use-case/period/ModifyPeriod";
+import { ListExpensesForPeriod } from "../domain/use-case/expense/ListExpensesForPeriod";
 
-router.get("/current", async (request, response) => {
-  try {
-    const period = await getCurrentPeriod();
-    response.json(period);
-  } catch (e) {
-    if (e instanceof MissingPeriodForDateError) {
-      response.status(404).json({ errors: e.message });
-      return;
-    }
-    response.status(500).end();
-  }
-});
+export default function createRouter(repository: Repository) {
+  const router = express.Router();
 
-router.get("/current/expenses", async (request, response) => {
-  try {
-    const period = await getCurrentPeriod();
-    const expenses = await listExpensesForPeriod(period);
+  const listAllPeriods = new ListAllPeriods(repository.periodRepository);
+  const getCurrentPeriod = new GetCurrentPeriod(repository.periodRepository);
+  const getPeriodById = new GetPeriodById(repository.periodRepository);
+  const addPeriod = new AddPeriod(repository.periodRepository);
+  const modifyPeriod = new ModifyPeriod(repository.periodRepository);
+  const listExpensesForPeriod = new ListExpensesForPeriod(
+    repository.expenseRepository,
+  );
 
-    response.status(200).json(expenses);
-  } catch (e) {
-    if (e instanceof MissingPeriodForDateError) {
-      response.status(404).json({ errors: e.message });
-      return;
-    }
-    response.status(500).end();
-  }
-});
-
-router.get("/:periodId", async (request, response) => {
-  const periodId = request.params.periodId;
-
-  try {
-    const period = await getPeriod(periodId);
-    response.json(period);
-  } catch (e) {
-    response.status(500).end();
-  }
-});
-
-router.get("/:periodId/expenses", async (request, response) => {
-  const periodId = request.params.periodId;
-
-  try {
-    const period = await getPeriod(periodId);
-    const expenses = await listExpensesForPeriod(period);
-
-    response.status(200).json(expenses);
-  } catch (e) {
-    response.status(500).end();
-  }
-});
-
-router.post("/", async (request, response) => {
-  const dateStart = request.body.dateStart as Date;
-  const dateEnd = request.body.dateEnd as Date;
-  const name = request.body.name as string;
-
-  const validationErrors = validatePeriod({
-    dateStart,
-    dateEnd,
-    name,
-  });
-  if (validationErrors.length > 0) {
-    response.status(400).json({ errors: validationErrors });
-    return;
-  }
-
-  try {
-    const period = await savePeriod({
-      dateStart,
-      dateEnd,
-      name,
-    });
-    response.status(201).json(period);
-  } catch (e) {
-    response.status(500).end();
-  }
-});
-
-router.put("/:periodId", async (request, response) => {
-  const periodId = request.params.periodId;
-
-  const dateStart = request.body.dateStart as Date;
-  const dateEnd = request.body.dateEnd as Date;
-  const name = request.body.name as string;
-
-  const validationErrors = validatePeriod({
-    periodId,
-    dateStart,
-    dateEnd,
-    name,
+  router.get("/", async (request, response) => {
+    const periods = await listAllPeriods.execute();
+    response.json(periods);
   });
 
-  if (validationErrors.length > 0) {
-    response.status(400).json({ errors: validationErrors });
-    return;
-  }
+  router.get("/current", async (request, response) => {
+    try {
+      const period = await getCurrentPeriod.execute();
+      response.json(period);
+    } catch (e) {
+      if (e instanceof MissingPeriodForDateError) {
+        response.status(404).json({ errors: e.message });
+        return;
+      }
+      response.status(500).end();
+    }
+  });
 
-  try {
-    const period = await savePeriod({
-      periodId,
-      dateStart,
-      dateEnd,
-      name,
-    });
-    response.status(201).json(period);
-  } catch (e) {
-    response.status(500).end();
-  }
-});
+  router.get("/current/expenses", async (request, response) => {
+    try {
+      const period = await getCurrentPeriod.execute();
+      const expenses = await listExpensesForPeriod.execute({ period });
 
-export default router;
+      response.status(200).json(expenses);
+    } catch (e) {
+      if (e instanceof MissingPeriodForDateError) {
+        response.status(404).json({ errors: e.message });
+        return;
+      }
+      response.status(500).end();
+    }
+  });
+
+  router.get("/:periodId", async (request, response) => {
+    const id = request.params.periodId;
+
+    try {
+      const period = await getPeriodById.execute({ id });
+      response.json(period);
+    } catch (e) {
+      if (e instanceof MissingPeriodError) {
+        response.status(404).json({ errors: e.message });
+        return;
+      }
+      response.status(500).end();
+    }
+  });
+
+  router.get("/:periodId/expenses", async (request, response) => {
+    const periodId = request.params.periodId;
+
+    try {
+      const period = await getPeriodById.execute({ id: periodId });
+      const expenses = await listExpensesForPeriod.execute({ period });
+
+      response.status(200).json(expenses);
+    } catch (e) {
+      if (e instanceof MissingPeriodError) {
+        response.status(404).json({ errors: e.message });
+        return;
+      }
+      response.status(500).end();
+    }
+  });
+
+  router.post("/", async (request, response) => {
+    const dateStart = request.body.dateStart as Date;
+    const dateEnd = request.body.dateEnd as Date;
+    const name = request.body.name as string;
+
+    try {
+      const period = await addPeriod.execute({
+        dateStart,
+        dateEnd,
+        name,
+      });
+      response.status(201).json(period);
+    } catch (e) {
+      if (e instanceof ValidationError) {
+        response.status(400).json({ errors: e.message });
+        return;
+      }
+      response.status(500).end();
+    }
+  });
+
+  router.put("/:periodId", async (request, response) => {
+    const id = request.params.periodId;
+
+    const dateStart = request.body.dateStart as Date;
+    const dateEnd = request.body.dateEnd as Date;
+    const name = request.body.name as string;
+
+    try {
+      const period = await modifyPeriod.execute({
+        id,
+        dateStart,
+        dateEnd,
+        name,
+      });
+      response.status(201).json(period);
+    } catch (e) {
+      if (e instanceof MissingPeriodError) {
+        response.status(404).json({ errors: e.message });
+        return;
+      }
+      if (e instanceof ValidationError) {
+        response.status(400).json({ errors: e.message });
+        return;
+      }
+      response.status(500).end();
+    }
+  });
+
+  return router;
+}

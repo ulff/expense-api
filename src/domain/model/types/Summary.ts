@@ -1,7 +1,8 @@
-import { PLN } from "./PLN";
-import { Period } from "./period";
-import { Expense } from "./expense";
-import { Category, CategoryName } from "./category";
+import { PLN } from "../PLN";
+import { Period } from "../Period";
+import { Expense } from "../Expense";
+import { Category } from "./Category";
+import { CategoryName } from "./CategoryName";
 
 export type SummaryInput = {
   period: Period;

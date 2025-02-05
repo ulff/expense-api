@@ -6,9 +6,11 @@ import summary from "./summary";
 import status from "./status";
 
 export const setupRoutes = (app: Express) => {
+  const repository = app.get("repository");
+
   app.use("/categories", categories);
-  app.use("/periods", periods);
-  app.use("/expenses", expenses);
-  app.use("/summary", summary);
+  app.use("/periods", periods(repository));
+  app.use("/expenses", expenses(repository));
+  app.use("/summary", summary(repository));
   app.use("/status", status);
 };
