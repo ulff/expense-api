@@ -7,13 +7,16 @@ import { MissingExpenseError } from "../domain/error/MissingExpenseError";
 import { ValidationError } from "../domain/validator/error/ValidationError";
 
 import { ListAllExpenses } from "../domain/use-case/expense/ListAllExpenses";
+import { GetExpenseById } from "../domain/use-case/expense/GetExpenseById";
 import { AddExpense } from "../domain/use-case/expense/AddExpense";
 import { ModifyExpense } from "../domain/use-case/expense/ModifyExpense";
+import { DeleteExpense } from "../domain/use-case/expense/DeleteExpense";
 
 export default function createRouter(repository: Repository) {
   const router = express.Router();
 
   const listAllExpenses = new ListAllExpenses(repository.expenseRepository);
+  const getExpenseById = new GetExpenseById(repository.expenseRepository);
   const addExpense = new AddExpense(
     repository.expenseRepository,
     repository.periodRepository,
@@ -22,10 +25,26 @@ export default function createRouter(repository: Repository) {
     repository.expenseRepository,
     repository.periodRepository,
   );
+  const deleteExpense = new DeleteExpense(repository.expenseRepository);
 
   router.get("/", async (request, response) => {
     const expenses = await listAllExpenses.execute();
     response.json(expenses);
+  });
+
+  router.get("/:expenseId", async (request, response) => {
+    const id = request.params.expenseId;
+
+    try {
+      const expense = await getExpenseById.execute({ id });
+      response.json(expense);
+    } catch (e) {
+      if (e instanceof MissingExpenseError) {
+        response.status(404).json({ errors: e.message });
+        return;
+      }
+      response.status(500).end();
+    }
   });
 
   router.post("/", async (request, response) => {
@@ -89,6 +108,17 @@ export default function createRouter(repository: Repository) {
         response.status(400).json({ errors: e.message });
         return;
       }
+      response.status(500).end();
+    }
+  });
+
+  router.delete("/:expenseId", async (request, response) => {
+    const id = request.params.expenseId;
+
+    try {
+      await deleteExpense.execute({ id });
+      response.status(204).json({});
+    } catch (e) {
       response.status(500).end();
     }
   });

@@ -2,7 +2,7 @@ import { Expense } from "../../entity/Expense";
 import { ExpenseRepository } from "../../repository/ExpenseRepository";
 import { MissingExpenseError } from "../../error/MissingExpenseError";
 
-export type GetPeriodByIdCommand = {
+export type GetExpenseByIdCommand = {
   id: string;
 };
 
@@ -13,7 +13,7 @@ export class GetExpenseById {
     this.repository = repository;
   }
 
-  public execute(command: GetPeriodByIdCommand): Promise<Expense> {
+  public execute(command: GetExpenseByIdCommand): Promise<Expense> {
     return new Promise(async (resolve, reject) => {
       try {
         const expense = await this.repository.getExpense(command.id);
