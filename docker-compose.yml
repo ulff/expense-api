@@ -11,5 +11,6 @@ services:
       - POSTGRES_PASSWORD=987d6b
       - POSTGRES_DB=expenseapidb
     volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/expenseapi.sql
       - /var/lib/postgresql/data
       - /var/lib/postgresql/tmp
