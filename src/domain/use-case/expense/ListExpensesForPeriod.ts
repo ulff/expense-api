@@ -1,5 +1,5 @@
-import { Period } from "../../model/Period";
-import { Expense } from "../../model/Expense";
+import { Period } from "../../entity/Period";
+import { Expense } from "../../entity/Expense";
 import { ExpenseRepository } from "../../repository/ExpenseRepository";
 
 export type ListExpensesForPeriodCommand = {

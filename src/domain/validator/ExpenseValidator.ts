@@ -2,7 +2,7 @@ import { ModifyExpenseCommand } from "../use-case/expense/ModifyExpense";
 import { AddExpenseCommand } from "../use-case/expense/AddExpense";
 
 import { ExpenseRepository } from "../repository/ExpenseRepository";
-import { EmptyFieldError } from "./error/EmptyFieldError";
+import { EmptyFieldValidationError } from "./error/EmptyFieldValidationError";
 
 export class ExpenseValidator {
   private readonly repository: ExpenseRepository;
@@ -15,16 +15,16 @@ export class ExpenseValidator {
     command: ModifyExpenseCommand | AddExpenseCommand,
   ): void {
     if (!command.zloty) {
-      throw new EmptyFieldError("zloty");
+      throw new EmptyFieldValidationError("zloty");
     }
     if (!command.groszy) {
-      throw new EmptyFieldError("groszy");
+      throw new EmptyFieldValidationError("groszy");
     }
     if (!command.category) {
-      throw new EmptyFieldError("category");
+      throw new EmptyFieldValidationError("category");
     }
     if (!command.spentOn) {
-      throw new EmptyFieldError("spentOn");
+      throw new EmptyFieldValidationError("spentOn");
     }
 
     // todo: check amount formats

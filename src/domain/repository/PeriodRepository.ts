@@ -1,4 +1,4 @@
-import { Period } from "../model/Period";
+import { Period } from "../entity/Period";
 
 export interface PeriodRepository {
   savePeriod(period: Period): Promise<Period>;

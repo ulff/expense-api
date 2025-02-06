@@ -1,6 +1,6 @@
 import { ValidationError } from "./ValidationError";
 
-export class EmptyFieldError extends ValidationError {
+export class EmptyFieldValidationError extends ValidationError {
   public message: string;
   public field: string;
 

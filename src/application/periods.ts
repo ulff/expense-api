@@ -1,8 +1,8 @@
 import express from "express";
 
 import { Repository } from "../domain/repository/Respository";
-import { MissingPeriodForDateError } from "../domain/validator/error/expense/MissingPeriodForDateError";
-import { MissingPeriodError } from "../domain/validator/error/period/MissingPeriodError";
+import { MissingPeriodForDateError } from "../domain/error/MissingPeriodForDateError";
+import { MissingPeriodError } from "../domain/error/MissingPeriodError";
 import { ValidationError } from "../domain/validator/error/ValidationError";
 
 import { ListAllPeriods } from "../domain/use-case/period/ListAllPeriods";
