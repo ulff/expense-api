@@ -3,6 +3,7 @@ import { AddExpenseCommand } from "../use-case/expense/AddExpense";
 
 import { ExpenseRepository } from "../repository/ExpenseRepository";
 import { EmptyFieldValidationError } from "./error/EmptyFieldValidationError";
+import { InvalidFieldValidationError } from "./error/InvalidFieldValidationError";
 
 export class ExpenseValidator {
   private readonly repository: ExpenseRepository;
@@ -14,11 +15,15 @@ export class ExpenseValidator {
   public static validateData(
     command: ModifyExpenseCommand | AddExpenseCommand,
   ): void {
-    if (!command.zloty) {
-      throw new EmptyFieldValidationError("zloty");
+    if (!Number.isInteger(command.zloty) || command.zloty < 0) {
+      throw new InvalidFieldValidationError("zloty");
     }
-    if (!command.groszy) {
-      throw new EmptyFieldValidationError("groszy");
+    if (
+      !Number.isInteger(command.groszy) ||
+      command.groszy < 0 ||
+      command.groszy >= 100
+    ) {
+      throw new InvalidFieldValidationError("groszy");
     }
     if (!command.category) {
       throw new EmptyFieldValidationError("category");
