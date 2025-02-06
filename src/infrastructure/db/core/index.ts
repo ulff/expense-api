@@ -12,7 +12,7 @@ export const execute: (sql: string, params: any[]) => Promise<void> = async (
 ) => {
   try {
     if (!db) {
-      console.log("Reinitializing database connection...");
+      // console.log("Reinitializing database connection...");
       db = await connection.connect();
     }
     await db.query(sql, params);
@@ -31,7 +31,7 @@ export const fetchOne: (sql: string, params: any[]) => Promise<any> = async (
 ) => {
   try {
     if (!db) {
-      console.log("Reinitializing database connection...");
+      // console.log("Reinitializing database connection...");
       db = await connection.connect();
     }
     const queryReturn = await db.query(sql, params);
@@ -53,7 +53,7 @@ export const fetchMany: (sql: string, params: any[]) => Promise<any[]> = async (
 ) => {
   try {
     if (!db) {
-      console.log("Reinitializing database connection...");
+      // console.log("Reinitializing database connection...");
       db = await connection.connect();
     }
     const queryReturn = await db.query(sql, params);

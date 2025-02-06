@@ -1,5 +1,5 @@
 {
-  "name": "expense-apfi",
+  "name": "expense-api",
   "version": "1.0.0",
   "description": "Simple RestAPI for collecting information about daily expenses.",
   "main": "src/app.ts",
@@ -9,7 +9,9 @@
     "typechecks": "tsc --noEmit",
     "prettier": "prettier . --check",
     "prettier:fix": "prettier . --write",
-    "unit-tests": "jest"
+    "unit-tests": "jest",
+    "db:migrate": "node ./bin/migrations.js",
+    "db:populate": "ts-node ./bin/populate.ts"
   },
   "author": "Olaf Gałązka",
   "license": "MIT",
