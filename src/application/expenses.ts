@@ -1,9 +1,9 @@
 import express from "express";
 
 import { Repository } from "../domain/repository/Respository";
-import { CategoryName } from "../domain/model/types/CategoryName";
-import { MissingPeriodForDateError } from "../domain/validator/error/expense/MissingPeriodForDateError";
-import { MissingExpenseError } from "../domain/validator/error/expense/MissingExpenseError";
+import { CategoryName } from "../domain/entity/types/CategoryName";
+import { MissingPeriodForDateError } from "../domain/error/MissingPeriodForDateError";
+import { MissingExpenseError } from "../domain/error/MissingExpenseError";
 import { ValidationError } from "../domain/validator/error/ValidationError";
 
 import { ListAllExpenses } from "../domain/use-case/expense/ListAllExpenses";

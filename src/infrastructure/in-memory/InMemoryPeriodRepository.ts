@@ -1,6 +1,6 @@
-import { Period } from "../../domain/model/Period";
+import { Period } from "../../domain/entity/Period";
 import { PeriodRepository } from "../../domain/repository/PeriodRepository";
-import { MissingPeriodForDateError } from "../../domain/validator/error/expense/MissingPeriodForDateError";
+import { MissingPeriodForDateError } from "../../domain/error/MissingPeriodForDateError";
 
 export class InMemoryPeriodRepository implements PeriodRepository {
   private repository: { [key: string]: Period };

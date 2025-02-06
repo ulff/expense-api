@@ -1,6 +1,6 @@
-import { Period } from "../../model/Period";
+import { Period } from "../../entity/Period";
 import { PeriodRepository } from "../../repository/PeriodRepository";
-import { MissingPeriodError } from "../../validator/error/period/MissingPeriodError";
+import { MissingPeriodError } from "../../error/MissingPeriodError";
 
 export type GetPeriodByIdCommand = {
   id: string;

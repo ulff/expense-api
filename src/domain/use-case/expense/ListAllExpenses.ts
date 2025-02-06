@@ -1,4 +1,4 @@
-import { Expense } from "../../model/Expense";
+import { Expense } from "../../entity/Expense";
 import { ExpenseRepository } from "../../repository/ExpenseRepository";
 
 export class ListAllExpenses {

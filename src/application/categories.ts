@@ -1,5 +1,5 @@
 import express from "express";
-import categories from "../data/categories.json";
+import categories from "../data/static/categories.json";
 
 const router = express.Router();
 

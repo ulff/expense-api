@@ -1,6 +1,6 @@
 import { ExpenseRepository } from "../../domain/repository/ExpenseRepository";
-import { Expense } from "../../domain/model/Expense";
-import { Period } from "../../domain/model/Period";
+import { Expense } from "../../domain/entity/Expense";
+import { Period } from "../../domain/entity/Period";
 
 export class InMemoryExpenseRepository implements ExpenseRepository {
   private repository: { [key: string]: Expense };

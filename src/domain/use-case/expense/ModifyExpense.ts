@@ -1,10 +1,10 @@
-import { Expense } from "../../model/Expense";
-import { PLN } from "../../model/PLN";
-import { CategoryName } from "../../model/types/CategoryName";
+import { Expense } from "../../entity/Expense";
+import { PLN } from "../../entity/PLN";
+import { CategoryName } from "../../entity/types/CategoryName";
 import { ExpenseRepository } from "../../repository/ExpenseRepository";
 import { PeriodRepository } from "../../repository/PeriodRepository";
 import { ExpenseValidator } from "../../validator/ExpenseValidator";
-import { MissingExpenseError } from "../../validator/error/expense/MissingExpenseError";
+import { MissingExpenseError } from "../../error/MissingExpenseError";
 
 export type ModifyExpenseCommand = {
   id: string;

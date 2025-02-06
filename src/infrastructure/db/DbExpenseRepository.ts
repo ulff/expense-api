@@ -1,9 +1,9 @@
 import { execute, fetchOne, fetchMany } from "./core";
-import { Expense } from "../../domain/model/Expense";
+import { Expense } from "../../domain/entity/Expense";
+import { Period } from "../../domain/entity/Period";
+import { PLN } from "../../domain/entity/PLN";
+import { CategoryName } from "../../domain/entity/types/CategoryName";
 import { ExpenseRepository } from "../../domain/repository/ExpenseRepository";
-import { Period } from "../../domain/model/Period";
-import { PLN } from "../../domain/model/PLN";
-import { CategoryName } from "../../domain/model/types/CategoryName";
 
 export class DbExpenseRepository implements ExpenseRepository {
   constructor() {}

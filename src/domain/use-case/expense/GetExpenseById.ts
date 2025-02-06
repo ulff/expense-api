@@ -1,6 +1,6 @@
-import { Expense } from "../../model/Expense";
+import { Expense } from "../../entity/Expense";
 import { ExpenseRepository } from "../../repository/ExpenseRepository";
-import { MissingExpenseError } from "../../validator/error/expense/MissingExpenseError";
+import { MissingExpenseError } from "../../error/MissingExpenseError";
 
 export type GetPeriodByIdCommand = {
   id: string;

@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 
-import { setupRoutes } from "./routes";
+import { setupRoutes } from "./application";
 import { config } from "./config";
 
 import { DbRepository } from "./infrastructure/db/DbRepository";

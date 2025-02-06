@@ -1,7 +1,7 @@
 import { execute, fetchOne, fetchMany } from "./core";
 
-import { Period } from "../../domain/model/Period";
-import { MissingPeriodForDateError } from "../../domain/validator/error/expense/MissingPeriodForDateError";
+import { Period } from "../../domain/entity/Period";
+import { MissingPeriodForDateError } from "../../domain/error/MissingPeriodForDateError";
 import { PeriodRepository } from "../../domain/repository/PeriodRepository";
 
 export class DbPeriodRepository implements PeriodRepository {

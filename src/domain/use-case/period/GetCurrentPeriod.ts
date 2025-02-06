@@ -1,6 +1,6 @@
-import { Period } from "../../model/Period";
+import { Period } from "../../entity/Period";
 import { PeriodRepository } from "../../repository/PeriodRepository";
-import { MissingPeriodForDateError } from "../../validator/error/expense/MissingPeriodForDateError";
+import { MissingPeriodForDateError } from "../../error/MissingPeriodForDateError";
 
 export class GetCurrentPeriod {
   private readonly repository: PeriodRepository;

@@ -1,11 +1,11 @@
-import { Period } from "../model/Period";
+import { Period } from "../entity/Period";
 import { PeriodRepository } from "../repository/PeriodRepository";
 import { ModifyPeriodCommand } from "../use-case/period/ModifyPeriod";
 import { AddPeriodCommand } from "../use-case/period/AddPeriod";
 
-import { InvalidDateRangeError } from "./error/period/InvalidDateRangeError";
-import { DatesCollisionError } from "./error/period/DatesCollisionError";
-import { EmptyFieldError } from "./error/EmptyFieldError";
+import { InvalidDateRangeValidationError } from "./error/InvalidDateRangeValidationError";
+import { DatesCollisionValidationError } from "./error/DatesCollisionValidationError";
+import { EmptyFieldValidationError } from "./error/EmptyFieldValidationError";
 
 const filterIntersected = (p1: Period, p2: Period): boolean => {
   return startsInside(p1, p2) || endsInside(p1, p2) || encloses(p1, p2);
@@ -34,19 +34,19 @@ export class PeriodValidator {
     command: ModifyPeriodCommand | AddPeriodCommand,
   ): void {
     if (!command.name) {
-      throw new EmptyFieldError("name");
+      throw new EmptyFieldValidationError("name");
     }
 
     if (!command.dateStart) {
-      throw new EmptyFieldError("dateStart");
+      throw new EmptyFieldValidationError("dateStart");
     }
 
     if (!command.dateEnd) {
-      throw new EmptyFieldError("dateEnd");
+      throw new EmptyFieldValidationError("dateEnd");
     }
 
     if (command.dateStart > command.dateEnd) {
-      throw new InvalidDateRangeError();
+      throw new InvalidDateRangeValidationError();
     }
 
     // todo: check both dates formats
@@ -63,7 +63,7 @@ export class PeriodValidator {
           .filter((p: Period) => p.id !== period.id)
           .filter((p: Period) => filterIntersected(period, p));
         if (conflicted.length > 0) {
-          reject(new DatesCollisionError());
+          reject(new DatesCollisionValidationError());
         }
         resolve();
       } catch (err) {

@@ -1,9 +1,9 @@
-import { Expense } from "../../model/Expense";
-import { PLN } from "../../model/PLN";
-import { Period } from "../../model/Period";
-import { Category } from "../../model/types/Category";
-import { CategoryName } from "../../model/types/CategoryName";
-import { Summary, SummaryIndex } from "../../model/types/Summary";
+import { Expense } from "../../entity/Expense";
+import { PLN } from "../../entity/PLN";
+import { Period } from "../../entity/Period";
+import { Category } from "../../entity/types/Category";
+import { CategoryName } from "../../entity/types/CategoryName";
+import { Summary, SummarySpendings } from "../../entity/types/Summary";
 
 export type PrepareSummaryForPeriodCommand = {
   period: Period;
@@ -17,10 +17,10 @@ export class PrepareSummaryForPeriod {
   constructor() {}
 
   public execute(command: PrepareSummaryForPeriodCommand): Summary {
-    const summaryIndex: SummaryIndex = {};
+    const summaryIndex: SummarySpendings = {};
 
-    const calculated: SummaryIndex = command.expenses.reduce(
-      (acc: SummaryIndex, expense: Expense) => {
+    const calculated: SummarySpendings = command.expenses.reduce(
+      (acc: SummarySpendings, expense: Expense) => {
         if (!acc[expense.category]) {
           acc[expense.category] = {
             label: command.categories[expense.category as CategoryName].label,

@@ -1,5 +1,5 @@
-import { Expense } from "../model/Expense";
-import { Period } from "../model/Period";
+import { Expense } from "../entity/Expense";
+import { Period } from "../entity/Period";
 
 export interface ExpenseRepository {
   saveExpense(period: Expense): Promise<Expense>;
