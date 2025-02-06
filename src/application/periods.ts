@@ -10,6 +10,7 @@ import { GetCurrentPeriod } from "../domain/use-case/period/GetCurrentPeriod";
 import { GetPeriodById } from "../domain/use-case/period/GetPeriodById";
 import { AddPeriod } from "../domain/use-case/period/AddPeriod";
 import { ModifyPeriod } from "../domain/use-case/period/ModifyPeriod";
+import { DeletePeriod } from "../domain/use-case/period/DeletePeriod";
 import { ListExpensesForPeriod } from "../domain/use-case/expense/ListExpensesForPeriod";
 
 export default function createRouter(repository: Repository) {
@@ -20,6 +21,7 @@ export default function createRouter(repository: Repository) {
   const getPeriodById = new GetPeriodById(repository.periodRepository);
   const addPeriod = new AddPeriod(repository.periodRepository);
   const modifyPeriod = new ModifyPeriod(repository.periodRepository);
+  const deletePeriod = new DeletePeriod(repository.periodRepository);
   const listExpensesForPeriod = new ListExpensesForPeriod(
     repository.expenseRepository,
   );
@@ -134,6 +136,17 @@ export default function createRouter(repository: Repository) {
         response.status(400).json({ errors: e.message });
         return;
       }
+      response.status(500).end();
+    }
+  });
+
+  router.delete("/:periodId", async (request, response) => {
+    const id = request.params.periodId;
+
+    try {
+      await deletePeriod.execute({ id });
+      response.status(204).json({});
+    } catch (e) {
       response.status(500).end();
     }
   });
