@@ -1,12 +1,11 @@
 import categories from "../../data/static/categories.json";
 
-import { ModifyExpenseCommand } from "../use-case/expense/ModifyExpense";
-import { AddExpenseCommand } from "../use-case/expense/AddExpense";
 import { CategoryName } from "../entity/types/CategoryName";
+import { AddExpenseCommand } from "../use-case/expense/AddExpense";
+import { ModifyExpenseCommand } from "../use-case/expense/ModifyExpense";
 
 import { InvalidFieldValidationError } from "./error/InvalidFieldValidationError";
 import { InvalidCategoryValidationError } from "./error/InvalidCategoryValidationError";
-import { EmptyFieldValidationError } from "./error/EmptyFieldValidationError";
 
 type ExpenseInput = {
   id?: string;

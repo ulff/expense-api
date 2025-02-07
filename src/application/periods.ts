@@ -1,6 +1,8 @@
 import express from "express";
 
 import { Repository } from "../domain/repository/Respository";
+import { PeriodValidator } from "../domain/validator/PeriodValidator";
+
 import { MissingPeriodForDateError } from "../domain/error/MissingPeriodForDateError";
 import { MissingPeriodError } from "../domain/error/MissingPeriodError";
 import { ValidationError } from "../domain/validator/error/ValidationError";
@@ -8,6 +10,8 @@ import { ValidationError } from "../domain/validator/error/ValidationError";
 import { ListAllPeriods } from "../domain/use-case/period/ListAllPeriods";
 import { GetCurrentPeriod } from "../domain/use-case/period/GetCurrentPeriod";
 import { GetPeriodById } from "../domain/use-case/period/GetPeriodById";
+import { DeletePeriod } from "../domain/use-case/period/DeletePeriod";
+import { ListExpensesForPeriod } from "../domain/use-case/expense/ListExpensesForPeriod";
 import {
   AddPeriod,
   AddPeriodCommand,
@@ -16,11 +20,6 @@ import {
   ModifyPeriod,
   ModifyPeriodCommand,
 } from "../domain/use-case/period/ModifyPeriod";
-import { DeletePeriod } from "../domain/use-case/period/DeletePeriod";
-import { ListExpensesForPeriod } from "../domain/use-case/expense/ListExpensesForPeriod";
-import { ExpenseValidator } from "../domain/validator/ExpenseValidator";
-import { ModifyExpenseCommand } from "../domain/use-case/expense/ModifyExpense";
-import { PeriodValidator } from "../domain/validator/PeriodValidator";
 
 export default function createRouter(repository: Repository) {
   const router = express.Router();

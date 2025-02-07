@@ -1,13 +1,11 @@
+import { Period } from "../entity/Period";
 import { PeriodValidator } from "./PeriodValidator";
 import { AddPeriodCommand } from "../use-case/period/AddPeriod";
-import { Period } from "../entity/Period";
 import { PeriodRepository } from "../repository/PeriodRepository";
 
 import { InvalidDateRangeValidationError } from "./error/InvalidDateRangeValidationError";
 import { EmptyFieldValidationError } from "./error/EmptyFieldValidationError";
 import { DatesCollisionValidationError } from "./error/DatesCollisionValidationError";
-import { ExpenseValidator } from "./ExpenseValidator";
-import { AddExpenseCommand } from "../use-case/expense/AddExpense";
 import { InvalidFieldValidationError } from "./error/InvalidFieldValidationError";
 
 const mockRepository: PeriodRepository = {
