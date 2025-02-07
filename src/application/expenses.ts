@@ -1,16 +1,23 @@
 import express from "express";
 
 import { Repository } from "../domain/repository/Respository";
-import { CategoryName } from "../domain/entity/types/CategoryName";
+import { ExpenseValidator } from "../domain/validator/ExpenseValidator";
+
 import { MissingPeriodForDateError } from "../domain/error/MissingPeriodForDateError";
 import { MissingExpenseError } from "../domain/error/MissingExpenseError";
 import { ValidationError } from "../domain/validator/error/ValidationError";
 
 import { ListAllExpenses } from "../domain/use-case/expense/ListAllExpenses";
 import { GetExpenseById } from "../domain/use-case/expense/GetExpenseById";
-import { AddExpense } from "../domain/use-case/expense/AddExpense";
-import { ModifyExpense } from "../domain/use-case/expense/ModifyExpense";
 import { DeleteExpense } from "../domain/use-case/expense/DeleteExpense";
+import {
+  AddExpense,
+  AddExpenseCommand,
+} from "../domain/use-case/expense/AddExpense";
+import {
+  ModifyExpense,
+  ModifyExpenseCommand,
+} from "../domain/use-case/expense/ModifyExpense";
 
 export default function createRouter(repository: Repository) {
   const router = express.Router();
@@ -48,20 +55,22 @@ export default function createRouter(repository: Repository) {
   });
 
   router.post("/", async (request, response) => {
-    const zloty = request.body.zloty as number;
-    const groszy = request.body.groszy as number;
-    const category = request.body.category as CategoryName;
+    const zloty = request.body.zloty as string;
+    const groszy = request.body.groszy as string;
+    const category = request.body.category as string;
     const label = request.body.label as string;
-    const spentOn = request.body.spentOn as Date;
+    const spentOn = request.body.spentOn as string;
+
+    const command = ExpenseValidator.createExpenseCommand({
+      zloty,
+      groszy,
+      category,
+      spentOn,
+      label,
+    }) as AddExpenseCommand;
 
     try {
-      const expense = await addExpense.execute({
-        zloty,
-        groszy,
-        label,
-        category,
-        spentOn,
-      });
+      const expense = await addExpense.execute(command);
       response.status(201).json(expense);
     } catch (e) {
       if (e instanceof MissingPeriodForDateError) {
@@ -79,21 +88,23 @@ export default function createRouter(repository: Repository) {
   router.put("/:expenseId", async (request, response) => {
     const id = request.params.expenseId;
 
-    const zloty = request.body.zloty as number;
-    const groszy = request.body.groszy as number;
-    const category = request.body.category as CategoryName;
+    const zloty = request.body.zloty as string;
+    const groszy = request.body.groszy as string;
+    const category = request.body.category as string;
     const label = request.body.label as string;
-    const spentOn = request.body.spentOn as Date;
+    const spentOn = request.body.spentOn as string;
+
+    const command = ExpenseValidator.createExpenseCommand({
+      id,
+      zloty,
+      groszy,
+      category,
+      spentOn,
+      label,
+    }) as ModifyExpenseCommand;
 
     try {
-      const expense = await modifyExpense.execute({
-        id,
-        zloty,
-        groszy,
-        label,
-        category,
-        spentOn,
-      });
+      const expense = await modifyExpense.execute(command);
       response.status(201).json(expense);
     } catch (e) {
       if (e instanceof MissingExpenseError) {

@@ -1,9 +1,10 @@
 import express from "express";
 
 import categories from "../data/static/categories.json";
+import { Repository } from "../domain/repository/Respository";
+
 import { MissingPeriodError } from "../domain/error/MissingPeriodError";
 import { MissingPeriodForDateError } from "../domain/error/MissingPeriodForDateError";
-import { Repository } from "../domain/repository/Respository";
 
 import { GetCurrentPeriod } from "../domain/use-case/period/GetCurrentPeriod";
 import { GetPeriodById } from "../domain/use-case/period/GetPeriodById";

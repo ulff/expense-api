@@ -1,20 +1,52 @@
-import { ModifyExpenseCommand } from "../use-case/expense/ModifyExpense";
-import { AddExpenseCommand } from "../use-case/expense/AddExpense";
+import categories from "../../data/static/categories.json";
 
-import { ExpenseRepository } from "../repository/ExpenseRepository";
-import { EmptyFieldValidationError } from "./error/EmptyFieldValidationError";
+import { CategoryName } from "../entity/types/CategoryName";
+import { AddExpenseCommand } from "../use-case/expense/AddExpense";
+import { ModifyExpenseCommand } from "../use-case/expense/ModifyExpense";
+
 import { InvalidFieldValidationError } from "./error/InvalidFieldValidationError";
+import { InvalidCategoryValidationError } from "./error/InvalidCategoryValidationError";
+
+type ExpenseInput = {
+  id?: string;
+  zloty: string;
+  groszy: string;
+  spentOn: string;
+  category: string;
+  label?: string | null;
+};
 
 export class ExpenseValidator {
-  private readonly repository: ExpenseRepository;
+  public static createExpenseCommand(
+    input: ExpenseInput,
+  ): AddExpenseCommand | ModifyExpenseCommand {
+    if (input.id) {
+      return {
+        id: input.id,
+        zloty: parseInt(input.zloty, 10),
+        groszy: parseInt(input.groszy, 10),
+        spentOn: new Date(input.spentOn),
+        category: input.category as CategoryName,
+        label: input.label ?? null,
+      } as ModifyExpenseCommand;
+    }
 
-  constructor(repository: ExpenseRepository) {
-    this.repository = repository;
+    return {
+      zloty: parseInt(input.zloty, 10),
+      groszy: parseInt(input.groszy, 10),
+      spentOn: new Date(input.spentOn),
+      category: input.category as CategoryName,
+      label: input.label ?? null,
+    } as AddExpenseCommand;
   }
 
   public static validateData(
     command: ModifyExpenseCommand | AddExpenseCommand,
   ): void {
+    if (!command.spentOn || isNaN(command.spentOn.getTime())) {
+      throw new InvalidFieldValidationError("spentOn");
+    }
+
     if (!Number.isInteger(command.zloty) || command.zloty < 0) {
       throw new InvalidFieldValidationError("zloty");
     }
@@ -25,16 +57,14 @@ export class ExpenseValidator {
     ) {
       throw new InvalidFieldValidationError("groszy");
     }
-    if (!command.category) {
-      throw new EmptyFieldValidationError("category");
-    }
-    if (!command.spentOn) {
-      throw new EmptyFieldValidationError("spentOn");
-    }
 
-    // todo: check amount formats
-    // todo: check category existence
-    // todo: check spent date format
+    const validCategories: CategoryName[] = Object.keys(
+      categories,
+    ) as CategoryName[];
+
+    if (!validCategories.includes(command.category as CategoryName)) {
+      throw new InvalidCategoryValidationError(command.category);
+    }
 
     return;
   }
