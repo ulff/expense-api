@@ -8,10 +8,19 @@ import { ValidationError } from "../domain/validator/error/ValidationError";
 import { ListAllPeriods } from "../domain/use-case/period/ListAllPeriods";
 import { GetCurrentPeriod } from "../domain/use-case/period/GetCurrentPeriod";
 import { GetPeriodById } from "../domain/use-case/period/GetPeriodById";
-import { AddPeriod } from "../domain/use-case/period/AddPeriod";
-import { ModifyPeriod } from "../domain/use-case/period/ModifyPeriod";
+import {
+  AddPeriod,
+  AddPeriodCommand,
+} from "../domain/use-case/period/AddPeriod";
+import {
+  ModifyPeriod,
+  ModifyPeriodCommand,
+} from "../domain/use-case/period/ModifyPeriod";
 import { DeletePeriod } from "../domain/use-case/period/DeletePeriod";
 import { ListExpensesForPeriod } from "../domain/use-case/expense/ListExpensesForPeriod";
+import { ExpenseValidator } from "../domain/validator/ExpenseValidator";
+import { ModifyExpenseCommand } from "../domain/use-case/expense/ModifyExpense";
+import { PeriodValidator } from "../domain/validator/PeriodValidator";
 
 export default function createRouter(repository: Repository) {
   const router = express.Router();
@@ -92,16 +101,18 @@ export default function createRouter(repository: Repository) {
   });
 
   router.post("/", async (request, response) => {
-    const dateStart = request.body.dateStart as Date;
-    const dateEnd = request.body.dateEnd as Date;
+    const dateStart = request.body.dateStart as string;
+    const dateEnd = request.body.dateEnd as string;
     const name = request.body.name as string;
 
+    const command = PeriodValidator.createPeriodCommand({
+      dateStart,
+      dateEnd,
+      name,
+    }) as AddPeriodCommand;
+
     try {
-      const period = await addPeriod.execute({
-        dateStart,
-        dateEnd,
-        name,
-      });
+      const period = await addPeriod.execute(command);
       response.status(201).json(period);
     } catch (e) {
       if (e instanceof ValidationError) {
@@ -115,17 +126,19 @@ export default function createRouter(repository: Repository) {
   router.put("/:periodId", async (request, response) => {
     const id = request.params.periodId;
 
-    const dateStart = request.body.dateStart as Date;
-    const dateEnd = request.body.dateEnd as Date;
+    const dateStart = request.body.dateStart as string;
+    const dateEnd = request.body.dateEnd as string;
     const name = request.body.name as string;
 
+    const command = PeriodValidator.createPeriodCommand({
+      id,
+      dateStart,
+      dateEnd,
+      name,
+    }) as ModifyPeriodCommand;
+
     try {
-      const period = await modifyPeriod.execute({
-        id,
-        dateStart,
-        dateEnd,
-        name,
-      });
+      const period = await modifyPeriod.execute(command);
       response.status(201).json(period);
     } catch (e) {
       if (e instanceof MissingPeriodError) {

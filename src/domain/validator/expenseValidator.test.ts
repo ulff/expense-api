@@ -2,6 +2,7 @@ import { ExpenseValidator } from "./ExpenseValidator";
 import { AddExpenseCommand } from "../use-case/expense/AddExpense";
 
 import { InvalidFieldValidationError } from "./error/InvalidFieldValidationError";
+import { InvalidCategoryValidationError } from "./error/InvalidCategoryValidationError";
 
 describe("ExpenseValidator tests", () => {
   describe("validateData method tests", () => {
@@ -107,6 +108,45 @@ describe("ExpenseValidator tests", () => {
           if (error instanceof InvalidFieldValidationError) {
             expect(error.field).toBe("groszy");
             expect(error.message).toBe("Invalid value for property: groszy");
+          }
+        }
+      });
+
+      it("should throw InvalidCategoryValidationError if unknown Category", () => {
+        const command = {
+          zloty: 12,
+          groszy: 50,
+          category: "does-not-exist",
+          spentOn: new Date("2024-02-07 12:00"),
+        };
+
+        try {
+          ExpenseValidator.validateData(command as AddExpenseCommand);
+        } catch (error) {
+          expect(error).toBeInstanceOf(InvalidCategoryValidationError);
+          if (error instanceof InvalidCategoryValidationError) {
+            expect(error.field).toBe("category");
+            expect(error.message).toBe(
+              "Invalid category provided: does-not-exist",
+            );
+          }
+        }
+      });
+
+      it("should throw InvalidFieldValidationError if empty spentOn", () => {
+        const command = {
+          zloty: 12,
+          groszy: 50,
+          category: "fuel",
+        };
+
+        try {
+          ExpenseValidator.validateData(command as AddExpenseCommand);
+        } catch (error) {
+          expect(error).toBeInstanceOf(InvalidFieldValidationError);
+          if (error instanceof InvalidFieldValidationError) {
+            expect(error.field).toBe("spentOn");
+            expect(error.message).toBe("Invalid value for property: spentOn");
           }
         }
       });

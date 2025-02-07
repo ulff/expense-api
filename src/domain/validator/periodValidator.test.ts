@@ -6,6 +6,9 @@ import { PeriodRepository } from "../repository/PeriodRepository";
 import { InvalidDateRangeValidationError } from "./error/InvalidDateRangeValidationError";
 import { EmptyFieldValidationError } from "./error/EmptyFieldValidationError";
 import { DatesCollisionValidationError } from "./error/DatesCollisionValidationError";
+import { ExpenseValidator } from "./ExpenseValidator";
+import { AddExpenseCommand } from "../use-case/expense/AddExpense";
+import { InvalidFieldValidationError } from "./error/InvalidFieldValidationError";
 
 const mockRepository: PeriodRepository = {
   savePeriod: jest.fn(),
@@ -56,6 +59,40 @@ describe("PeriodValidator tests", () => {
       expect(() => {
         PeriodValidator.validateData(command);
       }).toThrow(InvalidDateRangeValidationError);
+    });
+
+    it("should throw InvalidFieldValidationError if empty dateStart", () => {
+      const command = {
+        dateEnd: new Date("2024-02-08"),
+        name: "Test Period",
+      };
+
+      try {
+        PeriodValidator.validateData(command as AddPeriodCommand);
+      } catch (error) {
+        expect(error).toBeInstanceOf(InvalidFieldValidationError);
+        if (error instanceof InvalidFieldValidationError) {
+          expect(error.field).toBe("dateStart");
+          expect(error.message).toBe("Invalid value for property: dateStart");
+        }
+      }
+    });
+
+    it("should throw InvalidFieldValidationError if empty dateEnd", () => {
+      const command = {
+        dateStart: new Date("2024-02-09"),
+        name: "Test Period",
+      };
+
+      try {
+        PeriodValidator.validateData(command as AddPeriodCommand);
+      } catch (error) {
+        expect(error).toBeInstanceOf(InvalidFieldValidationError);
+        if (error instanceof InvalidFieldValidationError) {
+          expect(error.field).toBe("dateEnd");
+          expect(error.message).toBe("Invalid value for property: dateEnd");
+        }
+      }
     });
   });
 
