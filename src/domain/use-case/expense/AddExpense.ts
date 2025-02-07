@@ -18,7 +18,6 @@ export type AddExpenseCommand = {
 
 export class AddExpense {
   private readonly repository: ExpenseRepository;
-  private readonly validator: ExpenseValidator;
   private readonly periodRepository: PeriodRepository;
 
   constructor(
@@ -27,7 +26,6 @@ export class AddExpense {
   ) {
     this.repository = repository;
     this.periodRepository = periodRepository;
-    this.validator = new ExpenseValidator(repository);
   }
 
   public execute(command: AddExpenseCommand): Promise<Expense> {

@@ -37,20 +37,9 @@ export class PeriodValidator {
       throw new EmptyFieldValidationError("name");
     }
 
-    if (!command.dateStart) {
-      throw new EmptyFieldValidationError("dateStart");
-    }
-
-    if (!command.dateEnd) {
-      throw new EmptyFieldValidationError("dateEnd");
-    }
-
     if (command.dateStart > command.dateEnd) {
       throw new InvalidDateRangeValidationError();
     }
-
-    // todo: check both dates formats
-    // todo: one day difference at least
 
     return;
   }

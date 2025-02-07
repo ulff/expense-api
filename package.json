@@ -9,7 +9,7 @@
     "typechecks": "tsc --noEmit",
     "prettier": "prettier . --check",
     "prettier:fix": "prettier . --write",
-    "unit-tests": "jest",
+    "unit-tests": "jest --verbose",
     "db:migrate": "node ./bin/migrations.js",
     "db:populate": "ts-node ./bin/populate.ts"
   },
