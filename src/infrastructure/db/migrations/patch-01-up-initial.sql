@@ -1,7 +1,7 @@
 CREATE TABLE periods(
   id UUID PRIMARY KEY,
-  date_start DATE NOT NULL,
-  date_end DATE NOT NULL,
+  date_start TIMESTAMP NOT NULL,
+  date_end TIMESTAMP NOT NULL,
   name VARCHAR(64) NOT NULL
 );
 
@@ -12,8 +12,8 @@ CREATE TABLE expenses(
   groszy INTEGER NOT NULL,
   category VARCHAR(64) NOT NULL,
   label VARCHAR(64) DEFAULT NULL,
-  spent_on DATE NOT NULL,
-  saved_on DATE NOT NULL,
+  spent_on TIMESTAMP NOT NULL,
+  saved_on TIMESTAMP NOT NULL,
   CONSTRAINT expenses_period_fkey FOREIGN KEY (period)
     REFERENCES periods (id) MATCH SIMPLE
     ON UPDATE NO ACTION

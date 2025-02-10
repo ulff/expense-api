@@ -48,13 +48,13 @@ export class InMemoryPeriodRepository implements PeriodRepository {
   getPeriodForDate(date: Date): Promise<Period> {
     return new Promise((resolve, reject) => {
       try {
-        const now = new Date();
+        const dateOrNow = date || new Date();
         const allPeriods = Object.values(this.repository);
         const filtered = allPeriods.filter(
-          (p) => p.dateStart < now && p.dateEnd > now,
+          (p) => p.dateStart < dateOrNow && p.dateEnd > dateOrNow,
         );
         if (filtered.length == 0) {
-          throw new MissingPeriodForDateError(now);
+          throw new MissingPeriodForDateError(dateOrNow);
         }
         resolve(filtered[0]);
       } catch (err) {
