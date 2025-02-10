@@ -2,7 +2,7 @@ import { ListAllExpenses } from "../../../../src/domain/use-case/expense/ListAll
 
 import { Expense } from "../../../../src/domain/entity/Expense";
 import { Period } from "../../../../src/domain/entity/Period";
-import { PLN } from "../../../../src/domain/entity/PLN";
+import { PLN } from "../../../../src/domain/entity/types/PLN";
 
 import { InMemoryExpenseRepository } from "../../../../src/infrastructure/in-memory/InMemoryExpenseRepository";
 

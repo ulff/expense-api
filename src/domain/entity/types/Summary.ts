@@ -1,4 +1,4 @@
-import { PLN } from "../PLN";
+import { PLN } from "./PLN";
 import { CategoryName } from "./CategoryName";
 
 type CategorySpendings = {

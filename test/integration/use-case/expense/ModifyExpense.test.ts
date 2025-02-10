@@ -5,7 +5,7 @@ import {
 
 import { Expense } from "../../../../src/domain/entity/Expense";
 import { Period } from "../../../../src/domain/entity/Period";
-import { PLN } from "../../../../src/domain/entity/PLN";
+import { PLN } from "../../../../src/domain/entity/types/PLN";
 
 import { MissingExpenseError } from "../../../../src/domain/error/MissingExpenseError";
 import { InvalidCategoryValidationError } from "../../../../src/domain/validator/error/InvalidCategoryValidationError";

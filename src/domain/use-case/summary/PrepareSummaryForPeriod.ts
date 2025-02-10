@@ -1,5 +1,5 @@
 import { Expense } from "../../entity/Expense";
-import { PLN } from "../../entity/PLN";
+import { PLN } from "../../entity/types/PLN";
 import { Period } from "../../entity/Period";
 import { Category } from "../../entity/types/Category";
 import { CategoryName } from "../../entity/types/CategoryName";

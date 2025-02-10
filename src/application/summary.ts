@@ -1,7 +1,7 @@
 import express from "express";
 
 import categories from "../data/static/categories.json";
-import { Repository } from "../domain/repository/Respository";
+import { RepositoryBus } from "../domain/repository/RespositoryBus";
 
 import { MissingPeriodError } from "../domain/error/MissingPeriodError";
 import { MissingPeriodForDateError } from "../domain/error/MissingPeriodForDateError";
@@ -11,7 +11,7 @@ import { GetPeriodById } from "../domain/use-case/period/GetPeriodById";
 import { ListExpensesForPeriod } from "../domain/use-case/expense/ListExpensesForPeriod";
 import { PrepareSummaryForPeriod } from "../domain/use-case/summary/PrepareSummaryForPeriod";
 
-export default function createRouter(repository: Repository) {
+export default function createRouter(repository: RepositoryBus) {
   const router = express.Router();
 
   const getCurrentPeriod = new GetCurrentPeriod(repository.periodRepository);

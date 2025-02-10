@@ -1,8 +1,8 @@
 import { populatePeriods } from "../src/data/sample/periods";
 import { populateExpenses } from "../src/data/sample/expenses";
-import { DbRepository } from "../src/infrastructure/db/DbRepository";
+import { DbRepositoryBus } from "../src/infrastructure/db/DbRepositoryBus";
 
-const run = async (repository: DbRepository) => {
+const run = async (repository: DbRepositoryBus) => {
   process.stdout.write("Populating periods... ");
   await populatePeriods(repository);
   process.stdout.write("done.\n");
@@ -12,7 +12,7 @@ const run = async (repository: DbRepository) => {
   process.stdout.write("done.\n");
 };
 
-const repository = new DbRepository();
+const repository = new DbRepositoryBus();
 run(repository)
   .then(() => {
     process.stdout.write("\nDatabase populated successfully!\n");
