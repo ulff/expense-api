@@ -1,6 +1,6 @@
 import express from "express";
 
-import { Repository } from "../domain/repository/Respository";
+import { RepositoryBus } from "../domain/repository/RespositoryBus";
 import { PeriodValidator } from "../domain/validator/PeriodValidator";
 
 import { MissingPeriodForDateError } from "../domain/error/MissingPeriodForDateError";
@@ -21,7 +21,7 @@ import {
   ModifyPeriodCommand,
 } from "../domain/use-case/period/ModifyPeriod";
 
-export default function createRouter(repository: Repository) {
+export default function createRouter(repository: RepositoryBus) {
   const router = express.Router();
 
   const listAllPeriods = new ListAllPeriods(repository.periodRepository);

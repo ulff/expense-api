@@ -8,7 +8,7 @@ import categories from "../../../../src/data/static/categories.json";
 
 import { Expense } from "../../../../src/domain/entity/Expense";
 import { Period } from "../../../../src/domain/entity/Period";
-import { PLN } from "../../../../src/domain/entity/PLN";
+import { PLN } from "../../../../src/domain/entity/types/PLN";
 import { Summary } from "../../../../src/domain/entity/types/Summary";
 
 describe("PrepareSummaryForPeriod Integration Tests", () => {

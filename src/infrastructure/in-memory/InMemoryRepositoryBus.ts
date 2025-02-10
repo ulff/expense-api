@@ -1,8 +1,8 @@
 import { InMemoryPeriodRepository } from "./InMemoryPeriodRepository";
 import { InMemoryExpenseRepository } from "./InMemoryExpenseRepository";
-import { Repository } from "../../domain/repository/Respository";
+import { RepositoryBus } from "../../domain/repository/RespositoryBus";
 
-export class InMemoryRepository implements Repository {
+export class InMemoryRepositoryBus implements RepositoryBus {
   readonly periodRepository: InMemoryPeriodRepository;
   readonly expenseRepository: InMemoryExpenseRepository;
 

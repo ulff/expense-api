@@ -1,7 +1,7 @@
 import { execute, fetchOne, fetchMany } from "./core";
 import { Expense } from "../../domain/entity/Expense";
 import { Period } from "../../domain/entity/Period";
-import { PLN } from "../../domain/entity/PLN";
+import { PLN } from "../../domain/entity/types/PLN";
 import { CategoryName } from "../../domain/entity/types/CategoryName";
 import { ExpenseRepository } from "../../domain/repository/ExpenseRepository";
 

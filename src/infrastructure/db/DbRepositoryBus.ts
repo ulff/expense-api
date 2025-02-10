@@ -1,8 +1,8 @@
 import { DbPeriodRepository } from "./DbPeriodRepository";
 import { DbExpenseRepository } from "./DbExpenseRepository";
-import { Repository } from "../../domain/repository/Respository";
+import { RepositoryBus } from "../../domain/repository/RespositoryBus";
 
-export class DbRepository implements Repository {
+export class DbRepositoryBus implements RepositoryBus {
   readonly periodRepository: DbPeriodRepository;
   readonly expenseRepository: DbExpenseRepository;
 

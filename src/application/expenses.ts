@@ -1,6 +1,6 @@
 import express from "express";
 
-import { Repository } from "../domain/repository/Respository";
+import { RepositoryBus } from "../domain/repository/RespositoryBus";
 import { ExpenseValidator } from "../domain/validator/ExpenseValidator";
 
 import { MissingPeriodForDateError } from "../domain/error/MissingPeriodForDateError";
@@ -19,7 +19,7 @@ import {
   ModifyExpenseCommand,
 } from "../domain/use-case/expense/ModifyExpense";
 
-export default function createRouter(repository: Repository) {
+export default function createRouter(repository: RepositoryBus) {
   const router = express.Router();
 
   const listAllExpenses = new ListAllExpenses(repository.expenseRepository);

@@ -1,7 +1,7 @@
 import { v4 as Uuidv4 } from "uuid";
 
 import { Expense } from "../../entity/Expense";
-import { PLN } from "../../entity/PLN";
+import { PLN } from "../../entity/types/PLN";
 import { CategoryName } from "../../entity/types/CategoryName";
 
 import { ExpenseRepository } from "../../repository/ExpenseRepository";

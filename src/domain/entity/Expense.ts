@@ -1,5 +1,5 @@
 import { Period } from "./Period";
-import { PLN } from "./PLN";
+import { PLN } from "./types/PLN";
 import { CategoryName } from "./types/CategoryName";
 
 export class Expense {
