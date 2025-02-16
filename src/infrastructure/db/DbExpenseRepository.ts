@@ -1,4 +1,5 @@
-import { execute, fetchOne, fetchMany } from "./core";
+import { DbConnection } from "./DbConnection";
+
 import { Expense } from "../../domain/entity/Expense";
 import { Period } from "../../domain/entity/Period";
 import { PLN } from "../../domain/entity/types/PLN";
@@ -6,7 +7,12 @@ import { CategoryName } from "../../domain/entity/types/CategoryName";
 import { ExpenseRepository } from "../../domain/repository/ExpenseRepository";
 
 export class DbExpenseRepository implements ExpenseRepository {
-  constructor() {}
+  readonly db: DbConnection;
+
+  constructor(db: DbConnection) {
+    this.db = db;
+  }
+
   async saveExpense(expense: Expense): Promise<Expense> {
     const sql: string = `
       INSERT INTO 
@@ -44,7 +50,7 @@ export class DbExpenseRepository implements ExpenseRepository {
       new Date(),
     ];
 
-    await execute(sql, params);
+    await this.db.execute(sql, params);
 
     return this.getExpense(expense.id);
   }
@@ -53,7 +59,7 @@ export class DbExpenseRepository implements ExpenseRepository {
     const sql: string = `DELETE FROM expenses WHERE id = $1;`;
     const params: any[] = [id];
 
-    await execute(sql, params);
+    await this.db.execute(sql, params);
 
     return;
   }
@@ -68,7 +74,7 @@ export class DbExpenseRepository implements ExpenseRepository {
     `;
     const params: any[] = [id];
 
-    const result = await fetchOne(sql, params);
+    const result = await this.db.fetchOne(sql, params);
     if (result.length === 0) {
       return null;
     }
@@ -106,7 +112,7 @@ export class DbExpenseRepository implements ExpenseRepository {
 
     sql += "ORDER BY e.spent_on DESC;";
 
-    const results = await fetchMany(sql, params);
+    const results = await this.db.fetchMany(sql, params);
     if (!results || results.length === 0) {
       return [];
     }

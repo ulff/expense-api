@@ -1,11 +1,16 @@
-import { execute, fetchOne, fetchMany } from "./core";
+import { DbConnection } from "./DbConnection";
 
 import { Period } from "../../domain/entity/Period";
 import { MissingPeriodForDateError } from "../../domain/error/MissingPeriodForDateError";
 import { PeriodRepository } from "../../domain/repository/PeriodRepository";
 
 export class DbPeriodRepository implements PeriodRepository {
-  constructor() {}
+  readonly db: DbConnection;
+
+  constructor(db: DbConnection) {
+    this.db = db;
+  }
+
   async savePeriod(period: Period): Promise<Period> {
     const sql: string = `
       INSERT INTO 
@@ -30,7 +35,7 @@ export class DbPeriodRepository implements PeriodRepository {
       period.name,
     ];
 
-    await execute(sql, params);
+    await this.db.execute(sql, params);
 
     return this.getPeriod(period.id);
   }
@@ -39,7 +44,7 @@ export class DbPeriodRepository implements PeriodRepository {
     const sql: string = `DELETE FROM periods WHERE id = $1;`;
     const params: any[] = [id];
 
-    await execute(sql, params);
+    await this.db.execute(sql, params);
 
     return;
   }
@@ -48,7 +53,7 @@ export class DbPeriodRepository implements PeriodRepository {
     const sql: string = `SELECT * FROM periods WHERE id = $1;`;
     const params: any[] = [id];
 
-    const result = await fetchOne(sql, params);
+    const result = await this.db.fetchOne(sql, params);
     if (result.length === 0) {
       return null;
     }
@@ -67,7 +72,7 @@ export class DbPeriodRepository implements PeriodRepository {
     const sql: string = `SELECT * FROM periods WHERE date_start < $1 AND date_end > $1;`;
     const params: any[] = [date];
 
-    const result = await fetchOne(sql, params);
+    const result = await this.db.fetchOne(sql, params);
     if (result.length === 0) {
       throw new MissingPeriodForDateError(date);
     }
@@ -86,7 +91,7 @@ export class DbPeriodRepository implements PeriodRepository {
     const sql: string = `SELECT * FROM periods ORDER BY date_start;`;
     const params: any[] = [];
 
-    const results = await fetchMany(sql, params);
+    const results = await this.db.fetchMany(sql, params);
     if (!results || results.length === 0) {
       return [];
     }
