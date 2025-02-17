@@ -1,5 +1,6 @@
-import { populatePeriods } from "../src/data/sample/periods";
-import { populateExpenses } from "../src/data/sample/expenses";
+import { populatePeriods } from "../src/domain/data/sample/periods";
+import { populateExpenses } from "../src/domain/data/sample/expenses";
+
 import { DbRepositoryBus } from "../src/infrastructure/db/DbRepositoryBus";
 
 const run = async (repository: DbRepositoryBus) => {

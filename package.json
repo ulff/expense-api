@@ -11,7 +11,9 @@
     "prettier:fix": "prettier . --write",
     "unit-tests": "jest --verbose",
     "db:migrate": "node ./bin/migrations.js",
-    "db:populate": "ts-node ./bin/populate.ts"
+    "db:populate": "ts-node ./bin/populate.ts",
+    "build": "tsc",
+    "start": "npm run db:migrate && node ./dist/app.js"
   },
   "author": "Olaf Gałązka",
   "license": "MIT",

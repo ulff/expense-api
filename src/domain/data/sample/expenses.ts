@@ -1,8 +1,8 @@
-import { RepositoryBus } from "../../domain/repository/RespositoryBus";
+import { RepositoryBus } from "../../repository/RespositoryBus";
 import {
   AddExpense,
   AddExpenseCommand,
-} from "../../domain/use-case/expense/AddExpense";
+} from "../../use-case/expense/AddExpense";
 
 const expensesCommands: AddExpenseCommand[] = [];
 
