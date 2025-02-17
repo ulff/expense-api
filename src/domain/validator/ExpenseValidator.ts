@@ -1,4 +1,4 @@
-import categories from "../../data/static/categories.json";
+import categories from "../data/static/categories.json";
 
 import { CategoryName } from "../entity/types/CategoryName";
 import { AddExpenseCommand } from "../use-case/expense/AddExpense";

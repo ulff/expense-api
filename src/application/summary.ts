@@ -1,6 +1,6 @@
 import express from "express";
 
-import categories from "../data/static/categories.json";
+import categories from "../domain/data/static/categories.json";
 import { RepositoryBus } from "../domain/repository/RespositoryBus";
 
 import { MissingPeriodError } from "../domain/error/MissingPeriodError";

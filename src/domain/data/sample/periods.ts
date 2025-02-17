@@ -1,8 +1,5 @@
-import { RepositoryBus } from "../../domain/repository/RespositoryBus";
-import {
-  AddPeriod,
-  AddPeriodCommand,
-} from "../../domain/use-case/period/AddPeriod";
+import { RepositoryBus } from "../../repository/RespositoryBus";
+import { AddPeriod, AddPeriodCommand } from "../../use-case/period/AddPeriod";
 
 const periodCommands: AddPeriodCommand[] = [];
 

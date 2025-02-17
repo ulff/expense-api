@@ -4,7 +4,7 @@ import {
 } from "../../../../src/domain/use-case/summary/PrepareSummaryForPeriod";
 
 // @ts-ignore
-import categories from "../../../../src/data/static/categories.json";
+import categories from "../../../../src/domain/data/static/categories.json";
 
 import { Expense } from "../../../../src/domain/entity/Expense";
 import { Period } from "../../../../src/domain/entity/Period";
