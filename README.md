@@ -100,12 +100,13 @@ to see if it's working
 
 ### The most comfortable way to work locally
 
-While working on the project, it's easier to use `npm run dev` command that runs _nodemon_
+While working on the project, it's easier to use `dev` command that runs _nodemon_
 under the hood and does not require restarting. If you want to use it instead `npm start`,
 just remember to run the database migrations before:
 
 ```bash
 $> npm run db:migrate
+$> npm run dev
 ```
 
 ### Populating the database with sample data
