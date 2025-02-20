@@ -96,7 +96,17 @@ $> npm start
 The project should successfully start on your localhost on port 4000.
 
 Navigate to [http://localhost:4000/status/online](http://localhost:4000/status/online)
-to see if it's working
+to see if it's working.
+
+### Authorizing header
+
+To use this API you need to set the authorizing `auth-token` header for every request.
+Look into `.env` file to check the value for it (some random value is set by default).
+You should configure your API client to include `auth-token` header with this value
+into every request. You can check if it worked by navigating to the `/status/auth`
+healthcheck endpoint:
+
+[http://localhost:4000/status/auth](http://localhost:4000/status/auth)
 
 ### The most comfortable way to work locally
 
@@ -120,7 +130,8 @@ $> npm run db:populate
 
 ### Running tests
 
-The application is covered with tests running on _Jest_. There is also prettier and typescript checks. Everything is wrapped in one command, so you could just run:
+The application is covered with tests running on _Jest_. There is also prettier and
+typescript checks. Everything is wrapped in one command, so you could just run:
 
 ```bash
 $> npm run test
