@@ -1,4 +1,6 @@
 import { Express } from "express-serve-static-core";
+import { authorize } from "../middleware";
+
 import categories from "./categories";
 import periods from "./periods";
 import expenses from "./expenses";
@@ -7,6 +9,8 @@ import status from "./status";
 
 export const setupRoutes = (app: Express) => {
   const repository = app.get("repository");
+
+  app.use(authorize);
 
   app.use("/categories", categories);
   app.use("/periods", periods(repository));
