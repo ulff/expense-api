@@ -10,11 +10,9 @@ import status from "./status";
 export const setupRoutes = (app: Express) => {
   const repository = app.get("repository");
 
-  app.use(authorize);
-
-  app.use("/categories", categories);
-  app.use("/periods", periods(repository));
-  app.use("/expenses", expenses(repository));
-  app.use("/summary", summary(repository));
   app.use("/status", status);
+  app.use("/categories", authorize, categories);
+  app.use("/periods", authorize, periods(repository));
+  app.use("/expenses", authorize, expenses(repository));
+  app.use("/summary", authorize, summary(repository));
 };
