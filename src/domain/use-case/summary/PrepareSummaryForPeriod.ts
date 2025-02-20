@@ -38,11 +38,19 @@ export class PrepareSummaryForPeriod {
       summaryIndex,
     );
 
+    const total: PLN = command.expenses.reduce(
+      (acc: PLN, expense: Expense) => {
+        return PLN.sumPLN(acc, expense.amount);
+      },
+      new PLN(0, 0),
+    );
+
     const summary: Summary = {
       name: command.period.name,
       dateStart: command.period.dateStart,
       dateEnd: command.period.dateEnd,
       categories: calculated,
+      total,
     };
 
     return summary;

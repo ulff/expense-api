@@ -15,4 +15,5 @@ export type Summary = {
   dateStart: Date;
   dateEnd: Date;
   categories: SummarySpendings;
+  total: PLN;
 };

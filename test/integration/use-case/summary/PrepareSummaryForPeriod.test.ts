@@ -68,6 +68,7 @@ describe("PrepareSummaryForPeriod Integration Tests", () => {
     expect(summary.categories["entertainment"].amount).toEqual(
       new PLN(200, 75),
     );
+    expect(summary.total).toEqual(new PLN(351, 50));
   });
 
   test("should return an empty summary when there are no expenses", () => {
@@ -90,5 +91,6 @@ describe("PrepareSummaryForPeriod Integration Tests", () => {
     expect(summary.dateStart).toEqual(new Date("2025-02-01 00:00:00"));
     expect(summary.dateEnd).toEqual(new Date("2025-02-28 23:59:59"));
     expect(Object.keys(summary.categories)).toHaveLength(0);
+    expect(summary.total).toEqual(new PLN(0, 0));
   });
 });
